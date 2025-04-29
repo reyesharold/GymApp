@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymSystemApplication", "Gym
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{8711A540-6C70-4B76-9D34-12EB9A1DA838}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{F10DC25E-68D9-4D6C-945D-B8AF7567CCF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{8711A540-6C70-4B76-9D34-12EB9A1DA838}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8711A540-6C70-4B76-9D34-12EB9A1DA838}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8711A540-6C70-4B76-9D34-12EB9A1DA838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F10DC25E-68D9-4D6C-945D-B8AF7567CCF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F10DC25E-68D9-4D6C-945D-B8AF7567CCF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F10DC25E-68D9-4D6C-945D-B8AF7567CCF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F10DC25E-68D9-4D6C-945D-B8AF7567CCF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
