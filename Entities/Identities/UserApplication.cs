@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Entities.Domain;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace Entities.Identities
 {
     public class UserApplication : IdentityUser<Guid>
     {
-        public string MemberName { get; set; }
+        public string DisplayName { get; set; }
+        public Member Member { get; set; } // one to one -> Member
+        public Trainer Trainer { get; set; } // one to one -> Trainer
     }
 }

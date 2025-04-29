@@ -2,6 +2,7 @@
 using Entities.Identities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +11,14 @@ namespace Entities.Domain
 {
     public class Member
     {
-        public Guid UserId { get; set; }
-        public UserApplication User {  get; set; }
+        [Key]
+        public Guid UserId { get; set; } // foreignKey & acts as MemberId
+        public UserApplication User {  get; set; } // one to one -> UserApplication
         public DateOnly DateOfBirth { get; set; }
         public Gender Gender { get; set; }
         public int MembershipId { get; set; }
-        public Membership Membership { get; set; }
+        public Membership Membership { get; set; } // one to one -> Membership
+        public ICollection<Payment> Payment { get; set; } // one to many -> Payment
+        public ICollection<Attendance> Attendances { get; set; } // one to many -> Attendance
     }
 }
