@@ -14,7 +14,6 @@ namespace Entities.Domain
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int DurationInDays { get; set; }
-        public ICollection<Member> Members { get; set; } // one to many -> Member
-
+        public ICollection<Member> Members { get; set; } // one to many -> Member 
     }
 }
