@@ -11,6 +11,7 @@ namespace Entities.Identities
     public class UserApplication : IdentityUser<Guid>
     {
         public string DisplayName { get; set; }
+        public string Address { get; set; }
         public Member Member { get; set; } // one to one -> Member
         public Trainer Trainer { get; set; } // one to one -> Trainer
     }

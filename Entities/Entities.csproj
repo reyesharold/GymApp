@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DTO\IdentityDTO\" />
     <Folder Include="JoinedTables\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
