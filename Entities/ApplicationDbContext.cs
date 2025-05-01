@@ -77,6 +77,16 @@ namespace Entities
             #endregion
 
             #region Property Configuration
+            builder.Entity<UserApplication>()
+                .Property(d => d.DisplayName)
+                .HasMaxLength(30)
+                .IsRequired();
+
+            builder.Entity<UserApplication>()
+                .Property(a => a.Address)
+                .HasMaxLength(70)
+                .IsRequired();
+
             builder.Entity<Member>()
                 .Property(d => d.DateOfBirth)
                 .HasColumnType("date")
