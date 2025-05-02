@@ -21,7 +21,6 @@ namespace Entities.DTO.MemberDTO
         [Required(ErrorMessage = "Membership is required")]
         public int MembershipId { get; set; }
 
-        [Required(ErrorMessage = "User Id is required")]
         public Guid UserId { get; set; }
         public Member ToMember()
         {

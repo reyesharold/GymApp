@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities.Enums;
+using Services.PaymentServices;
+using Entities.DTO.PaymentDTO;
 
 namespace Services.UserServices
 {
@@ -19,12 +22,18 @@ namespace Services.UserServices
         private readonly UserManager<UserApplication> _userManager;
         private readonly IMemberService _memberService;
         private readonly SignInManager<UserApplication> _signInManager;
+        private readonly IPaymentService _paymentService;
 
-        public UserService( UserManager<UserApplication> userManager, IMemberService memberService, SignInManager<UserApplication> signInManager)
+        public UserService( UserManager<
+            UserApplication> userManager, 
+            IMemberService memberService, 
+            SignInManager<UserApplication> signInManager,
+            IPaymentService paymentService)
         {
             _userManager = userManager;
             _memberService = memberService;
             _signInManager = signInManager;
+            _paymentService = paymentService;
         }
 
         public async Task<MemberResponse> RegisterMember(RegisterMemberAddRequest request)
@@ -38,13 +47,21 @@ namespace Services.UserServices
                 PhoneNumber = request.RegisterDTO.PhoneNumber,
             };
 
-            IdentityResult result = await _userManager.CreateAsync(user, request.RegisterDTO.Password);
-            if (!result.Succeeded)
-            {
-                throw new Exception("Error Creating User");
-            }
+            IdentityResult createUserResult = await _userManager.CreateAsync(user, request.RegisterDTO.Password); //add user to AspNetUsers
+            if (!createUserResult.Succeeded) { throw new Exception("Error Creating User");}
 
-            var member = await _memberService.AddMemberAsync(request.MemberAddRequest);
+            IdentityResult addRoleResult = await _userManager.AddToRoleAsync(user, nameof(Roles.Member)); // assign role
+            if (!addRoleResult.Succeeded) { throw new Exception("Error assigning role"); }
+
+            request.MemberAddRequest.UserId = user.Id; // assigns userID to Member
+
+            var member = await _memberService.AddMemberAsync(request.MemberAddRequest); //add user to Members
+
+            request.PaymentAddRequest.UserId = user.Id;
+            request.PaymentAddRequest.PaymentDate = DateTime.Now;
+            if (request.PaymentAddRequest.Amount != member.Membership?.Price) { throw new Exception("Please Pay exact amount"); }
+
+            await _paymentService.CreatePaymentAsync(request.PaymentAddRequest); // add payment
 
             await _signInManager.SignInAsync(user, isPersistent: false); 
 
@@ -55,7 +72,6 @@ namespace Services.UserServices
                 Gender = member.Gender,
                 Membership = member.Membership,
             };
-            
         }
     }
 }
