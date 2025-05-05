@@ -1,4 +1,5 @@
 ﻿using Entities.Domain;
+using Entities.Enums;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Entities.Identities
     {
         public string DisplayName { get; set; }
         public string Address { get; set; }
+        public AccountStatus AccountStatus { get; set; }
         public Member Member { get; set; } // one to one -> Member
         public Trainer Trainer { get; set; } // one to one -> Trainer
     }

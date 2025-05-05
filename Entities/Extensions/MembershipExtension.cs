@@ -10,7 +10,7 @@ namespace Entities.Extensions
 {
     public static class MembershipExtension
     {
-        public static MembershipResponse ToMembershipExtension(this Membership membership)
+        public static MembershipResponse ToMembershipResponse(this Membership membership)
         {
             return new MembershipResponse
             {

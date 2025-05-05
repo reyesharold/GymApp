@@ -1,5 +1,7 @@
 ﻿using Entities.DTO.UserDTO;
 using Entities.Enums;
+using GymSystemApplication.Controllers.Payment;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Services.MembershipServices;
@@ -21,6 +23,7 @@ namespace GymSystemApplication.Controllers.Account
             _membershipService = membershipService;
         }
 
+        [Authorize(Policy = "NotAuthenticated")]
         [HttpGet]
         [Route("Account/Register")]
         public async Task<IActionResult> Register()
@@ -34,34 +37,25 @@ namespace GymSystemApplication.Controllers.Account
                     Text = temp.ToString()
                 });
 
+            //dropdown for MembershipType
             var memberships = await _membershipService.GetAllMembershipsAsync();
 
-            //dropdown for MembershipType
             ViewBag.MembershipType = memberships.Select(
                 temp => new SelectListItem
                 {
-                    Value = temp.MembershipId.ToString(),
+                    Value = temp.Id.ToString(),
                     Text = temp.Name
-                });
-
-            //dropdown for PaymentMethod
-            ViewBag.PaymentMethod = Enum.GetValues(typeof(PaymentMethod))
-                .Cast<PaymentMethod>()
-                .Select(temp => new SelectListItem
-                {
-                    Value = ((int)temp).ToString(),
-                    Text = temp.ToString(),
                 });
 
             return View();
         }
+        [Authorize(Policy = "NotAuthenticated")]
         [HttpPost]
         [Route("Account/Register")]
-        public async Task<IActionResult> Register(RegisterMemberAddRequest request, string returnUrl)
+        public async Task<IActionResult> Register(RegisterMemberAddRequest request)
         {
             try
             {
-                ModelState.Remove("returnUrl");
 
                 if (!ModelState.IsValid)
                 {
@@ -69,20 +63,39 @@ namespace GymSystemApplication.Controllers.Account
                     return View(request);
                 }
 
-                await _userService.RegisterMember(request);
+                var response = await _userService.RegisterMember(request);
 
-                if (!string.IsNullOrEmpty(returnUrl) && !Url.IsLocalUrl(returnUrl))
-                {
-                    return LocalRedirect(returnUrl);
-                }
 
-                return RedirectToAction("DisplayAllMembers", "Member");
+
+                //if (!string.IsNullOrEmpty(returnUrl) && !Url.IsLocalUrl(returnUrl))
+                //{
+                //    return LocalRedirect(returnUrl);
+                //}
+
+                return RedirectToAction(nameof(PaymentController.ProcessMembershipPayment), "Payment", new {id = response.User.Id});
             }
             catch
             {
                 return View(request);
             }
         }
+
+        [Authorize(Policy = "NotAuthenticated")]
+        [HttpGet]
+        [Route("Account/Login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [Authorize(Policy = "NotAuthenticated")]
+        [HttpPost]
+        [Route("Account/Login")]
+        public IActionResult Login(LoginDTO login)
+        {
+            return View();
+        }
+
 
     }
 }

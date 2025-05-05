@@ -1,4 +1,5 @@
 ﻿using Entities.Domain;
+using Entities.DTO.MembershipDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Services.MembershipServices
 {
     public interface IMembershipService
     {
-        Task<ICollection<Membership>> GetAllMembershipsAsync();
+        Task<ICollection<MembershipResponse>> GetAllMembershipsAsync();
     }
 }

@@ -10,5 +10,6 @@ namespace Services.MemberServices
     public interface IMemberService
     {
         Task<MemberResponse> AddMemberAsync(MemberAddRequest request);
+        Task<MemberResponse> GetMemberViaId(Guid id);
     }
 }
