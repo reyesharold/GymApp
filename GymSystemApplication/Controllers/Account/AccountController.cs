@@ -3,6 +3,7 @@ using Entities.Enums;
 using GymSystemApplication.Controllers.Payment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Services.MembershipServices;
 using Services.UserServices;
@@ -28,26 +29,33 @@ namespace GymSystemApplication.Controllers.Account
         [Route("Account/Register")]
         public async Task<IActionResult> Register()
         {
-            // dropdown for Gender
-            ViewBag.Gender = Enum.GetValues(typeof(Gender))
-                .Cast<Gender>()
-                .Select(temp => new SelectListItem
-                {
-                    Value = ((int)temp).ToString(),
-                    Text = temp.ToString()
-                });
+            try
+            {
+                // dropdown for Gender
+                ViewBag.Gender = Enum.GetValues(typeof(Gender))
+                    .Cast<Gender>()
+                    .Select(temp => new SelectListItem
+                    {
+                        Value = ((int)temp).ToString(),
+                        Text = temp.ToString()
+                    });
 
-            //dropdown for MembershipType
-            var memberships = await _membershipService.GetAllMembershipsAsync();
+                //dropdown for MembershipType
+                var memberships = await _membershipService.GetAllMembershipsAsync();
 
-            ViewBag.MembershipType = memberships.Select(
-                temp => new SelectListItem
-                {
-                    Value = temp.Id.ToString(),
-                    Text = temp.Name
-                });
+                ViewBag.MembershipType = memberships.Select(
+                    temp => new SelectListItem
+                    {
+                        Value = temp.Id.ToString(),
+                        Text = temp.Name
+                    });
 
-            return View();
+                return View();
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
         [Authorize(Policy = "NotAuthenticated")]
         [HttpPost]
@@ -64,19 +72,20 @@ namespace GymSystemApplication.Controllers.Account
                 }
 
                 var response = await _userService.RegisterMember(request);
+                if (!response.Success) 
+                { 
+                    foreach (var error in response.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    return View(request); 
+                }
 
-
-
-                //if (!string.IsNullOrEmpty(returnUrl) && !Url.IsLocalUrl(returnUrl))
-                //{
-                //    return LocalRedirect(returnUrl);
-                //}
-
-                return RedirectToAction(nameof(PaymentController.ProcessMembershipPayment), "Payment", new {id = response.User.Id});
+                return RedirectToAction(nameof(PaymentController.ProcessMembershipPayment), "Payment", new {id = response.UserId});
             }
-            catch
+            catch 
             {
-                return View(request);
+                return View("Error");
             }
         }
 

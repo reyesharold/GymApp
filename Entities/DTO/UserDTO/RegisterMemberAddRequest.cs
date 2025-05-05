@@ -12,6 +12,5 @@ namespace Entities.DTO.UserDTO
     {
         public RegisterDTO RegisterDTO { get; set; }
         public MemberAddRequest MemberAddRequest { get; set; }
-        public PaymentAddRequest PaymentAddRequest { get; set; }
     }
 }

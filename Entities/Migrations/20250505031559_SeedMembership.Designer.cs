@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250430225945_AddedAddressInUserApplication")]
-    partial class AddedAddressInUserApplication
+    [Migration("20250505031559_SeedMembership")]
+    partial class SeedMembership
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -146,12 +146,35 @@ namespace Entities.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(6, 3)
-                        .HasColumnType("decimal(6,3)");
+                        .HasPrecision(10, 3)
+                        .HasColumnType("decimal(10,3)");
 
                     b.HasKey("MembershipId");
 
                     b.ToTable("Membership");
+
+                    b.HasData(
+                        new
+                        {
+                            MembershipId = 1,
+                            DurationInDays = 30,
+                            Name = "Monthly",
+                            Price = 850m
+                        },
+                        new
+                        {
+                            MembershipId = 2,
+                            DurationInDays = 365,
+                            Name = "Yearly",
+                            Price = 5600m
+                        },
+                        new
+                        {
+                            MembershipId = 3,
+                            DurationInDays = 700,
+                            Name = "Premium",
+                            Price = 11700m
+                        });
                 });
 
             modelBuilder.Entity("Entities.Domain.Payment", b =>
@@ -298,6 +321,9 @@ namespace Entities.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AccountStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("Address")

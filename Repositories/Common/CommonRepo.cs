@@ -23,7 +23,7 @@ namespace Repositories.Common
 
         public async Task<T> AddAync(T entity)
         {
-            await _db.AddAsync(entity);
+            var test = await _db.AddAsync(entity);
             await _context.SaveChangesAsync();
 
             return entity;
