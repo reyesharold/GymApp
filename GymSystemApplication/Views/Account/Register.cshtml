@@ -10,7 +10,7 @@
 		<input asp-for="RegisterDTO.Name" />
 		<span asp-validation-for="RegisterDTO.Name"></span>
 	</div>
-	
+
 	<div>
 		<label for="RegisterDTO.Email">Email </label>
 		<input asp-for="RegisterDTO.Email" />
@@ -65,3 +65,12 @@
 	</div>
 
 </form>
+
+<div asp-validation-summary="All"></div>
+@if(ViewBag.Errors != null)
+{
+	foreach(var error in ViewBag.Errors)
+	{
+		<span>@error</span>
+	}
+}

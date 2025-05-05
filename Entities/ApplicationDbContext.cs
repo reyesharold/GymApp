@@ -1,5 +1,6 @@
 ﻿using Entities.Domain;
 using Entities.Identities;
+using Entities.Seeders;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,6 +27,11 @@ namespace Entities
                 .HasOne(u => u.User)
                 .WithOne(m => m.Member)
                 .HasForeignKey<Member>(u => u.UserId);
+
+            builder.Entity<Member>()
+                .HasOne(m => m.Membership)
+                .WithMany(m => m.Members)
+                .HasForeignKey(m => m.MembershipId);
 
             builder.Entity<Trainer>()
                 .HasOne(u => u.User)
@@ -109,7 +115,7 @@ namespace Entities
 
             builder.Entity<Membership>()
                 .Property(p => p.Price)
-                .HasPrecision(6,3)
+                .HasPrecision(10,3)
                 .IsRequired();
 
             builder.Entity<Membership>()
@@ -176,6 +182,11 @@ namespace Entities
                 .Property(d => d.BookingDate)
                 .HasColumnType("date")
                 .IsRequired();
+
+            #endregion
+
+            #region Seeders
+            MembershipSeeder.SeedMembership(builder);
 
             #endregion
         }

@@ -10,6 +10,6 @@ namespace Services.UserServices
 {
     public interface IUserService
     {
-        Task<MemberResponse> RegisterMember(RegisterMemberAddRequest request);
+        Task<RegisterMemberResponse> RegisterMember(RegisterMemberAddRequest request);
     }
 }

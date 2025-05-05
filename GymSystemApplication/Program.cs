@@ -1,6 +1,7 @@
 using Entities;
 using Entities.Domain;
 using Entities.Identities;
+using Entities.Seeders;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -47,7 +48,6 @@ builder.Services.AddAuthorization(options =>
                 context => !context.User.Identity.IsAuthenticated
                 );
         });
-    
 });
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -56,6 +56,12 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<RoleApplication>>();
+    await RoleSeeder.SeedRoleAsync(roleManager);
+}
 
 app.UseStaticFiles();
 app.UseRouting();

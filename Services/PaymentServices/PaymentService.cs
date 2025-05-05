@@ -30,12 +30,12 @@ namespace Services.PaymentServices
         {
             var member = await _memberService.GetMemberViaId(request.UserId); // get member via ID
 
-            if(member.Membership?.Price != request.Amount) { throw new ArgumentException("Please pay exact amount!"); } //checks if the amount paid is equal to membership Prices
+            if(member.MembershipPrice != request.Amount) { throw new ArgumentException("Please pay exact amount!", nameof(request.Amount)); } //checks if the amount paid is equal to membership Prices
 
             var response = await _commonRepo.AddAync(request.ToPayment()); // add payment entity to DB
 
             var user = await _userManager.FindByIdAsync(request.UserId.ToString()); // gets the user from AspNetUsers
-            if (user == null) { throw new ArgumentException("Invalid User Id"); }
+            if (user == null) { throw new ArgumentException("Invalid User Id", nameof(request.UserId)); }
 
             user.Member.User.AccountStatus = AccountStatus.Active; // updates the account status from pending to Active
 

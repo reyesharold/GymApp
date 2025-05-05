@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Entities.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class SeedMembership : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,7 +32,9 @@ namespace Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DisplayName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
+                    AccountStatus = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -58,7 +62,7 @@ namespace Entities.Migrations
                     MembershipId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(6,3)", precision: 6, scale: 3, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(10,3)", precision: 10, scale: 3, nullable: false),
                     DurationInDays = table.Column<int>(type: "int", nullable: false, defaultValue: 1)
                 },
                 constraints: table =>
@@ -350,6 +354,16 @@ namespace Entities.Migrations
                         principalTable: "WorkoutPlan",
                         principalColumn: "WorkoutPlanId",
                         onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Membership",
+                columns: new[] { "MembershipId", "DurationInDays", "Name", "Price" },
+                values: new object[,]
+                {
+                    { 1, 30, "Monthly", 850m },
+                    { 2, 365, "Yearly", 5600m },
+                    { 3, 700, "Premium", 11700m }
                 });
 
             migrationBuilder.CreateIndex(

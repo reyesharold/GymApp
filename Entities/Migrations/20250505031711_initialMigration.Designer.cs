@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250430011112_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20250505031711_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -146,12 +146,35 @@ namespace Entities.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(6, 3)
-                        .HasColumnType("decimal(6,3)");
+                        .HasPrecision(10, 3)
+                        .HasColumnType("decimal(10,3)");
 
                     b.HasKey("MembershipId");
 
                     b.ToTable("Membership");
+
+                    b.HasData(
+                        new
+                        {
+                            MembershipId = 1,
+                            DurationInDays = 30,
+                            Name = "Monthly",
+                            Price = 850m
+                        },
+                        new
+                        {
+                            MembershipId = 2,
+                            DurationInDays = 365,
+                            Name = "Yearly",
+                            Price = 5600m
+                        },
+                        new
+                        {
+                            MembershipId = 3,
+                            DurationInDays = 700,
+                            Name = "Premium",
+                            Price = 11700m
+                        });
                 });
 
             modelBuilder.Entity("Entities.Domain.Payment", b =>
@@ -300,13 +323,22 @@ namespace Entities.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("AccountStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DisplayName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)

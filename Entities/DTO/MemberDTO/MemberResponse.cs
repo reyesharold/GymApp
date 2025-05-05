@@ -18,7 +18,8 @@ namespace Entities.DTO.MemberDTO
         public DateOnly DateOfBirth { get; set; }
         public Gender Gender { get; set; }
         public int MembershipId { get; set; }
-        public MembershipResponse? Membership { get; set; }
+        public string MembershipName { get; set; }
+        public decimal MembershipPrice { get; set; }
         public ICollection<PaymentResponse>? Payments { get; set; }
         public ICollection<AttendanceResponse>? Attendances { get; set; }
         public ICollection<BookingResponse>? Bookings { get; set; }

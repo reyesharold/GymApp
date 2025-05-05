@@ -33,7 +33,7 @@ namespace Services.UserServices
             _signInManager = signInManager;
         }
 
-        public async Task<MemberResponse> RegisterMember(RegisterMemberAddRequest request)
+        public async Task<RegisterMemberResponse> RegisterMember(RegisterMemberAddRequest request)
         {
             var user = new UserApplication
             {
@@ -46,10 +46,25 @@ namespace Services.UserServices
             };
 
             IdentityResult createUserResult = await _userManager.CreateAsync(user, request.RegisterDTO.Password); //add user to AspNetUsers
-            if (!createUserResult.Succeeded) { throw new Exception("Error Creating User");}
+            if (!createUserResult.Succeeded) 
+            {
+
+                return new RegisterMemberResponse
+                {
+                    Success = false,
+                    Errors = createUserResult.Errors
+                };
+            }
 
             IdentityResult addRoleResult = await _userManager.AddToRoleAsync(user, nameof(Roles.Member)); // assign role
-            if (!addRoleResult.Succeeded) { throw new Exception("Error assigning role"); }
+            if (!addRoleResult.Succeeded)
+            {
+                return new RegisterMemberResponse
+                {
+                    Success = false,
+                    Errors = createUserResult.Errors
+                };
+            }
 
             request.MemberAddRequest.UserId = user.Id; // assigns userID to Member
 
@@ -63,12 +78,10 @@ namespace Services.UserServices
 
             await _signInManager.SignInAsync(user, isPersistent: false); 
 
-            return new MemberResponse
+            return new RegisterMemberResponse
             {
-                User = user.ToUserResponse(),
-                DateOfBirth =  member.DateOfBirth,
-                Gender = member.Gender,
-                Membership = member.Membership,
+                Success = true,
+                UserId = user.Id,
             };
         }
     }

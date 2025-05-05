@@ -18,7 +18,7 @@ namespace Entities.Extensions
                 Name = membership.Name,
                 Price = membership.Price,
                 DurationInDays = membership.DurationInDays,
-                Members = membership.Members.Select(m => m.ToMemberResponse()).ToList()
+                Members = membership.Members?.Select(m => m.ToMemberResponse()).ToList()
             };
         }
     }

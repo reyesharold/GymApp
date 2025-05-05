@@ -5,6 +5,7 @@
 }
 
 <h2>Process Payment for : @ViewBag.Name</h2>
+<h3>Amount to Pay : @ViewBag.Price</h3>
 
 <form asp-action="ProcessMembershipPayment" method="post">
 	<input type="hidden" asp-for="UserId" value="@ViewBag.Id" />
