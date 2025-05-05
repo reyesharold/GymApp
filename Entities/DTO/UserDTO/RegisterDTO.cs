@@ -16,7 +16,7 @@ namespace Entities.DTO.UserDTO
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "PhoneNumber can't be blank")]
+        [Required(ErrorMessage = "Phone Number can't be blank")]
         [RegularExpression(@"^\d{10,15}$", ErrorMessage = "Invalid Phone number format")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
@@ -28,7 +28,7 @@ namespace Entities.DTO.UserDTO
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "ConfirmPassword can't be blank")]
+        [Required(ErrorMessage = "Confirm Password can't be blank")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Password doesn't match")]
         public string ConfirmPassword { get; set; }

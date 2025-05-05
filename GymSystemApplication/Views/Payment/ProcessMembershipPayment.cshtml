@@ -1,0 +1,27 @@
+﻿@model PaymentAddRequest
+
+@{
+	ViewBag.Title = "Process Payment";
+}
+
+<h2>Process Payment for : @ViewBag.Name</h2>
+
+<form asp-action="ProcessMembershipPayment" method="post">
+	<input type="hidden" asp-for="UserId" value="@ViewBag.Id" />
+
+	<div>
+		<label for="Amount">Amount </label>
+		<input asp-for="Amount" />
+		<span asp-validation-for="Amount"></span>
+	</div>
+
+	<div>
+		<label for="PaymentMethod">Payment Method </label>
+		<select asp-for="PaymentMethod" asp-items="ViewBag.PaymentMethod"></select>
+		<span asp-validation-for="PaymentMethod"></span>
+	</div>
+
+	<div>
+		<button type="submit">Pay</button>
+	</div>
+</form>

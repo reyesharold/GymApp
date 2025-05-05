@@ -22,5 +22,10 @@ namespace Services.MemberServices
         {
             throw new NotImplementedException();
         }
+
+        public Task<MemberResponse> GetMemberViaId(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

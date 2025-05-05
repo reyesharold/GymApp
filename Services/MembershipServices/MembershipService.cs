@@ -1,4 +1,6 @@
 ﻿using Entities.Domain;
+using Entities.DTO.MembershipDTO;
+using Entities.Extensions;
 using Repositories.Common;
 using System;
 using System.Collections.Generic;
@@ -17,9 +19,11 @@ namespace Services.MembershipServices
             _commonRepo = commonRepo;
         }
 
-        public Task<ICollection<Membership>> GetAllMembershipsAsync()
+        public async Task<ICollection<MembershipResponse>> GetAllMembershipsAsync()
         {
-            throw new NotImplementedException();
+            var memberships = await _commonRepo.GetAllAsync();
+
+            return memberships.Select(temp => temp.ToMembershipResponse()).ToList();
         }
     }
 }

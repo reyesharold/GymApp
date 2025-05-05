@@ -22,18 +22,15 @@ namespace Services.UserServices
         private readonly UserManager<UserApplication> _userManager;
         private readonly IMemberService _memberService;
         private readonly SignInManager<UserApplication> _signInManager;
-        private readonly IPaymentService _paymentService;
 
         public UserService( UserManager<
             UserApplication> userManager, 
             IMemberService memberService, 
-            SignInManager<UserApplication> signInManager,
-            IPaymentService paymentService)
+            SignInManager<UserApplication> signInManager)
         {
             _userManager = userManager;
             _memberService = memberService;
             _signInManager = signInManager;
-            _paymentService = paymentService;
         }
 
         public async Task<MemberResponse> RegisterMember(RegisterMemberAddRequest request)
@@ -45,6 +42,7 @@ namespace Services.UserServices
                 UserName = request.RegisterDTO.Email,
                 Address = request.RegisterDTO.Address,
                 PhoneNumber = request.RegisterDTO.PhoneNumber,
+                AccountStatus = AccountStatus.Pending
             };
 
             IdentityResult createUserResult = await _userManager.CreateAsync(user, request.RegisterDTO.Password); //add user to AspNetUsers
@@ -57,11 +55,11 @@ namespace Services.UserServices
 
             var member = await _memberService.AddMemberAsync(request.MemberAddRequest); //add user to Members
 
-            request.PaymentAddRequest.UserId = user.Id;
-            request.PaymentAddRequest.PaymentDate = DateTime.Now;
-            if (request.PaymentAddRequest.Amount != member.Membership?.Price) { throw new Exception("Please Pay exact amount"); }
+            //request.PaymentAddRequest.UserId = user.Id;
+            //request.PaymentAddRequest.PaymentDate = DateTime.Now;
+            //if (request.PaymentAddRequest.Amount != member.Membership?.Price) { throw new Exception("Please Pay exact amount"); }
 
-            await _paymentService.CreatePaymentAsync(request.PaymentAddRequest); // add payment
+            //await _paymentService.CreatePaymentAsync(request.PaymentAddRequest); // add payment
 
             await _signInManager.SignInAsync(user, isPersistent: false); 
 

@@ -1,0 +1,67 @@
+﻿@model RegisterMemberAddRequest
+
+@{
+	ViewBag.Title = "Register";
+}
+
+<form asp-action="Register" method="post">
+	<div>
+		<label for="RegisterDTO.Name">Name </label>
+		<input asp-for="RegisterDTO.Name" />
+		<span asp-validation-for="RegisterDTO.Name"></span>
+	</div>
+	
+	<div>
+		<label for="RegisterDTO.Email">Email </label>
+		<input asp-for="RegisterDTO.Email" />
+		<span asp-validation-for="RegisterDTO.Email"></span>
+	</div>
+
+	<div>
+		<label for="MemberAddRequest.DateOfBirth">Date of Birth </label>
+		<input asp-for="MemberAddRequest.DateOfBirth" />
+		<span asp-validation-for="MemberAddRequest.DateOfBirth"></span>
+	</div>
+
+	<div>
+		<label for="MemberAddRequest.Gender">Gender </label>
+		<select asp-for="MemberAddRequest.Gender" asp-items="ViewBag.Gender"></select>
+		<span asp-validation-for="MemberAddRequest.DateOfBirth"></span>
+	</div>
+
+	<div>
+		<label for="MemberAddRequest.MembershipId">Membership Type </label>
+		<select asp-for="MemberAddRequest.MembershipId" asp-items="ViewBag.MembershipType"></select>
+		<span asp-validation-for="MemberAddRequest.MembershipId"></span>
+	</div>
+
+	<div>
+		<label for="RegisterDTO.PhoneNumber">Contact Number </label>
+		<input asp-for="RegisterDTO.PhoneNumber" />
+		<span asp-validation-for="RegisterDTO.PhoneNumber"></span>
+	</div>
+
+	<div>
+		<label for="RegisterDTO.Address">Address </label>
+		<input asp-for="RegisterDTO.Address" />
+		<span asp-validation-for="RegisterDTO.Address"></span>
+	</div>
+
+	<div>
+		<label for="RegisterDTO.Password">Password </label>
+		<input asp-for="RegisterDTO.Password" />
+		<span asp-validation-for="RegisterDTO.Password"></span>
+	</div>
+
+	<div>
+		<label for="RegisterDTO.ConfirmPassword">Confirm Password </label>
+		<input asp-for="RegisterDTO.ConfirmPassword" />
+		<span asp-validation-for="RegisterDTO.ConfirmPassword"></span>
+	</div>
+
+
+	<div>
+		<button type="submit">Register</button>
+	</div>
+
+</form>

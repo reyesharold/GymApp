@@ -18,7 +18,7 @@ namespace Entities.Extensions
                 DateOfBirth = member.DateOfBirth,
                 Gender = member.Gender,
                 MembershipId = member.MembershipId,
-                Membership = member.Membership.ToMembershipExtension(),
+                Membership = member.Membership.ToMembershipResponse(),
                 Payments = member.Payments.Select(p => p.ToPaymentResponse()).ToList(),
                 Attendances = member.Attendances.Select(a => a.ToAttendaceResponse()).ToList(),
                 Bookings = member.Bookings.Select(b => b.ToBookingReponse()).ToList(),
