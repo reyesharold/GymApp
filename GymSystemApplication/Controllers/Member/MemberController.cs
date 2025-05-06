@@ -1,6 +1,7 @@
 ﻿using Entities.ErrorViewModelClass;
 using Microsoft.AspNetCore.Mvc;
 using Services.MemberServices;
+using System.Threading.Tasks;
 
 namespace GymSystemApplication.Controllers.Member
 {
@@ -14,12 +15,15 @@ namespace GymSystemApplication.Controllers.Member
         }
 
         [Route("Member/Display-all")]
+        [Route("/")]
         [HttpGet]
-        public IActionResult DisplayMembers()
+        public async Task<IActionResult> DisplayMembers()
         {
             try
             {
-                return View();
+                var members = await _memberService.GetAllMembersAsync();
+
+                return View(members);
             }
             catch (Exception ex)
             {

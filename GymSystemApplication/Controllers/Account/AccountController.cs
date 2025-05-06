@@ -129,8 +129,10 @@ namespace GymSystemApplication.Controllers.Account
         [Authorize(Policy = "NotAuthenticated")]
         [HttpPost]
         [Route("Account/Login")]
-        public async Task<IActionResult> Login(LoginDTO login)
+        public async Task<IActionResult> Login(LoginDTO login, string returnUrl)
         {
+            ModelState.Remove(nameof(returnUrl));
+
             try
             { 
                 if (!ModelState.IsValid)
@@ -142,6 +144,11 @@ namespace GymSystemApplication.Controllers.Account
                 var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, isPersistent : false, lockoutOnFailure : false);
                 if (result.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
+
                     return RedirectToAction(nameof(MemberController.DisplayMembers), "Member");
                 }
                 else
