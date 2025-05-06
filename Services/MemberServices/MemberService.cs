@@ -26,12 +26,7 @@ namespace Services.MemberServices
 
             var response = await _commonRepo.AddAync(request.ToMember());
 
-            return new MemberResponse
-            {
-                User = response.User.ToUserResponse(),
-                DateOfBirth = response.DateOfBirth,
-                Gender = response.Gender,
-            };
+            return response.ToMemberResponse();
         }
 
         public async Task<MemberResponse> GetMemberViaId(Guid id)
@@ -45,18 +40,20 @@ namespace Services.MemberServices
 
             if (member == null) { throw new ArgumentException("Invalid Member ID", nameof(id)); }
 
-            return new MemberResponse
-            {
-                User = member.User.ToUserResponse(),
-                DateOfBirth= member.DateOfBirth,
-                Gender= member.Gender,
-                MembershipId = member.MembershipId,
-                MembershipName = member.Membership.Name,
-                MembershipPrice = member.Membership.Price,
-                Payments = member.Payments.Select(temp => temp.ToPaymentResponse()).ToList(),
-                Attendances = member.Attendances.Select(temp => temp.ToAttendaceResponse()).ToList(),
-                Bookings = member.Bookings.Select(temp => temp.ToBookingReponse()).ToList(),
-            };
+            return member.ToMemberResponse();
+        }
+
+        public async Task<ICollection<MemberResponse>> GetAllMembersAsync()
+        {
+            var members = await _commonRepo.GetAllAsync(null, query => query
+            .Include(u => u.User)
+            .Include(p => p.Payments)
+            .Include(a => a.Attendances)
+            .Include(b => b.Bookings)
+            .Include(m => m.Membership));
+
+            return members.Select(temp => temp.ToMemberResponse()).ToList();
+
         }
     }
 }
