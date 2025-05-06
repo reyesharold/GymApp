@@ -14,6 +14,6 @@ namespace Entities.DTO.PaymentDTO
         public DateTime PaymentDate { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public Guid MemberId { get; set; }
-        public string MemberName { get; set; }
+        public string? MemberName { get; set; }
     }
 }

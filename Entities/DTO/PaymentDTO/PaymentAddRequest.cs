@@ -17,7 +17,7 @@ namespace Entities.DTO.PaymentDTO
 
         public DateTime PaymentDate { get; set; }
 
-        [Required(ErrorMessage = "PaymentMethod can't be blank")]
+        [Required(ErrorMessage = "Payment method is required")]
         public PaymentMethod PaymentMethod { get; set; }
 
         public Guid UserId { get; set; }

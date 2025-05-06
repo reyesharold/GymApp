@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entities.ErrorViewModelClass;
+using Microsoft.AspNetCore.Mvc;
 using Services.MemberServices;
 
 namespace GymSystemApplication.Controllers.Member
@@ -16,7 +17,19 @@ namespace GymSystemApplication.Controllers.Member
         [HttpGet]
         public IActionResult DisplayMembers()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                var errorModel = new ErrorViewModel
+                {
+                    Message = ex.InnerException?.Message ?? ex.Message,
+                };
+
+                return View("Error", errorModel);
+            }
         }
     }
 }
