@@ -125,7 +125,7 @@ namespace Entities
 
             builder.Entity<Payment>()
                 .Property(a => a.Amount)
-                .HasPrecision(6, 3)
+                .HasPrecision(10, 3)
                 .IsRequired();
 
             builder.Entity<Payment>()

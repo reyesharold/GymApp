@@ -1,5 +1,6 @@
 ﻿using Entities.DTO.PaymentDTO;
 using Entities.Enums;
+using Entities.ErrorViewModelClass;
 using GymSystemApplication.Controllers.Member;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -44,9 +45,14 @@ namespace GymSystemApplication.Controllers.Payment
 
                 return View();
             }
-            catch
+            catch (Exception ex)
             {
-                return View("Error");
+                var errorModel = new ErrorViewModel
+                {
+                    Message = ex.InnerException?.Message ?? ex.Message,
+                };
+
+                return View("Error", errorModel);
             }
         }
         [Route("Payment/Process")]
@@ -59,9 +65,14 @@ namespace GymSystemApplication.Controllers.Payment
 
                 return RedirectToAction(nameof(MemberController.DisplayMembers), "Member");
             }
-            catch
+            catch (Exception ex) 
             {
-                return View("Error");
+                var errorModel = new ErrorViewModel
+                {
+                    Message = ex.InnerException?.Message ?? ex.Message,
+                };
+
+                return View("Error", errorModel);
             }
         }
     }

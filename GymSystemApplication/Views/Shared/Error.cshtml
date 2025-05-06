@@ -1,9 +1,10 @@
-﻿@{
+﻿@model ErrorViewModel
+
+@{
 	ViewBag.Title = "Error";
 }
 
-<h1>Error</h1>
-<h1>Error</h1>
-<h1>Error</h1>
-<h1>Error</h1>
-<h1>Error</h1>
+<h1>Error : </h1>
+<div>
+	<p><strong>@Model.Message</strong></p> 
+</div>

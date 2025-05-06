@@ -1,7 +1,11 @@
 ﻿using Entities.DTO.UserDTO;
 using Entities.Enums;
+using Entities.ErrorViewModelClass;
+using Entities.Identities;
+using GymSystemApplication.Controllers.Member;
 using GymSystemApplication.Controllers.Payment;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,13 +19,16 @@ namespace GymSystemApplication.Controllers.Account
     {
         private  readonly IUserService _userService;
         private readonly IMembershipService _membershipService;
+        private readonly SignInManager<UserApplication> _signInManager;
 
         public AccountController(
             IUserService userService, 
-            IMembershipService membershipService)
+            IMembershipService membershipService,
+            SignInManager<UserApplication> signInManager)
         {
             _userService = userService;
             _membershipService = membershipService;
+            _signInManager = signInManager;
         }
 
         [Authorize(Policy = "NotAuthenticated")]
@@ -52,9 +59,14 @@ namespace GymSystemApplication.Controllers.Account
 
                 return View();
             }
-            catch
+            catch (Exception ex)
             {
-                return View("Error");
+                var errorModel = new ErrorViewModel
+                {
+                    Message = ex.InnerException?.Message ?? ex.Message,
+                };
+
+                return View("Error", errorModel);
             }
         }
         [Authorize(Policy = "NotAuthenticated")]
@@ -83,9 +95,14 @@ namespace GymSystemApplication.Controllers.Account
 
                 return RedirectToAction(nameof(PaymentController.ProcessMembershipPayment), "Payment", new {id = response.UserId});
             }
-            catch 
+            catch (Exception ex)
             {
-                return View("Error");
+                var errorModel = new ErrorViewModel
+                {
+                    Message = ex.InnerException?.Message ?? ex.Message,
+                };
+
+                return View("Error", errorModel);
             }
         }
 
@@ -94,17 +111,62 @@ namespace GymSystemApplication.Controllers.Account
         [Route("Account/Login")]
         public IActionResult Login()
         {
-            return View();
+            try
+            { 
+                return View();
+            }
+            catch (Exception ex)
+            {
+                var errorModel = new ErrorViewModel
+                {
+                    Message = ex.InnerException?.Message ?? ex.Message,
+                };
+
+                return View("Error", errorModel);
+            }
         }
 
         [Authorize(Policy = "NotAuthenticated")]
         [HttpPost]
         [Route("Account/Login")]
-        public IActionResult Login(LoginDTO login)
+        public async Task<IActionResult> Login(LoginDTO login)
         {
-            return View();
+            try
+            { 
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Error = ModelState.Values.SelectMany(x => x.Errors).Select(e => e.ErrorMessage);
+                    return View(login);
+                }
+
+                var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, isPersistent : false, lockoutOnFailure : false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(MemberController.DisplayMembers), "Member");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid Username or Password");
+                    return View(login);
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorModel = new ErrorViewModel
+                {
+                    Message = ex.InnerException?.Message ?? ex.Message,
+                };
+
+                return View("Error", errorModel);
+            }
         }
 
+        [Route("Account/Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
 
+            return RedirectToAction("Login");
+        }
     }
 }

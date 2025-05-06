@@ -32,12 +32,14 @@ namespace Services.PaymentServices
 
             if(member.MembershipPrice != request.Amount) { throw new ArgumentException("Please pay exact amount!", nameof(request.Amount)); } //checks if the amount paid is equal to membership Prices
 
+            request.PaymentDate = DateTime.UtcNow;
+
             var response = await _commonRepo.AddAync(request.ToPayment()); // add payment entity to DB
 
-            var user = await _userManager.FindByIdAsync(request.UserId.ToString()); // gets the user from AspNetUsers
+            var user = await _userManager.FindByIdAsync(response.UserId.ToString()); // gets the user from AspNetUsers
             if (user == null) { throw new ArgumentException("Invalid User Id", nameof(request.UserId)); }
 
-            user.Member.User.AccountStatus = AccountStatus.Active; // updates the account status from pending to Active
+            user.AccountStatus = AccountStatus.Active; // updates the account status from pending to Active
 
             IdentityResult updateStatus = await _userManager.UpdateAsync(user); // updates the AspNetUsers DB
             if (!updateStatus.Succeeded) { throw new Exception("Unable to Update Account Status"); } // checking if update was successful
@@ -48,9 +50,6 @@ namespace Services.PaymentServices
                 Amount = response.Amount,
                 PaymentDate = response.PaymentDate,
                 PaymentMethod = response.PaymentMethod,
-                MemberId = response.Member.UserId,
-                MemberName = response.Member.User.DisplayName,
-
             };
         }
     }

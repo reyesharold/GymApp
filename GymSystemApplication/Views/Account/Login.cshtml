@@ -10,15 +10,25 @@
 		<input asp-for="Email"/>
 		<span asp-validation-for="Email"></span>
 	</div>
-	
+
 	<div>
 		<label for="Password">Password</label>
 		<input asp-for="Password" />
 		<span asp-validation-for="Password"></span>
 	</div>
-	
+
 	<div>
 		<button type="submit">Login</button>
 	</div>
 
 </form>
+
+<div asp-validation-summary="All"></div>
+@if(ViewBag.Error != null)
+{
+	@foreach (var error in ViewBag.Error)
+	{
+		<span>@error</span>
+	}
+}
+
