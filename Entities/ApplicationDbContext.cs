@@ -1,6 +1,7 @@
 ﻿using Entities.Domain;
 using Entities.Identities;
 using Entities.Seeders;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +12,16 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class ApplicationDbContext : IdentityDbContext<UserApplication,RoleApplication,Guid>
+    public class ApplicationDbContext : IdentityDbContext<
+        UserApplication,
+        RoleApplication,
+        Guid, 
+        IdentityUserClaim<Guid>, 
+        ApplicationUserRole,
+        IdentityUserLogin<Guid>,
+        IdentityRoleClaim<Guid>,
+        IdentityUserToken<Guid>
+        >
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -23,6 +33,18 @@ namespace Entities
             base.OnModelCreating(builder);
 
             #region RelationShips
+            builder.Entity<ApplicationUserRole>()
+               .HasOne(u => u.User)
+               .WithMany(ur => ur.UserRoles)
+               .HasForeignKey(u => u.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ApplicationUserRole>()
+               .HasOne(r => r.Role)
+               .WithMany(ur => ur.UserRoles)
+               .HasForeignKey(r => r.RoleId)
+               .OnDelete(DeleteBehavior.Restrict);
+
             builder.Entity<Member>()
                 .HasOne(u => u.User)
                 .WithOne(m => m.Member)
@@ -37,8 +59,7 @@ namespace Entities
                 .HasOne(u => u.User)
                 .WithOne(t => t.Trainer)
                 .HasForeignKey<Trainer>(u => u.UserId);
-
-
+             
             builder.Entity<Payment>()
                 .HasOne(m => m.Member)
                 .WithMany(p => p.Payments)
@@ -200,5 +221,6 @@ namespace Entities
         public DbSet<Trainer> Trainer { get; set; }
         public DbSet<WorkoutExercise> WorkoutExercise { get; set; }
         public DbSet<WorkoutPlan> WorkoutPlan { get; set; }
+        public DbSet<ApplicationUserRole> UserRoles {  get; set; }
     }
 }

@@ -16,5 +16,6 @@ namespace Entities.Identities
         public AccountStatus AccountStatus { get; set; }
         public Member Member { get; set; } // one to one -> Member
         public Trainer Trainer { get; set; } // one to one -> Trainer
+        public ICollection<ApplicationUserRole> UserRoles { get; set; }
     }
 }
