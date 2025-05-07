@@ -1,5 +1,6 @@
 ﻿using Entities.Domain;
 using Entities.DTO.MemberDTO;
+using Entities.Enums;
 using Entities.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Common;
@@ -45,15 +46,22 @@ namespace Services.MemberServices
 
         public async Task<ICollection<MemberResponse>> GetAllMembersAsync()
         {
-            var members = await _commonRepo.GetAllAsync(null, query => query
+
+            var members = await _commonRepo.GetAllAsync(m => 
+            !m.User.UserRoles.Any(r => r.Role.Name == Roles.Trainer.ToString() || 
+            !m.User.UserRoles.Any(r => r.Role.Name == Roles.Admin.ToString())), 
+            
+            query => query
             .Include(u => u.User)
+                .ThenInclude(ur => ur.UserRoles)
+                    .ThenInclude(r => r.Role)
             .Include(p => p.Payments)
             .Include(a => a.Attendances)
             .Include(b => b.Bookings)
-            .Include(m => m.Membership));
+            .Include(m => m.Membership)
+            );
 
             return members.Select(temp => temp.ToMemberResponse()).ToList();
-
         }
     }
 }

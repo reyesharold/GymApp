@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Entities.Identities
 {
-    public class RoleApplication : IdentityRole<Guid>
+    public class ApplicationUserRole : IdentityUserRole<Guid>
     {
-        public ICollection<ApplicationUserRole> UserRoles { get; set; }
+        public UserApplication User {  get; set; }
+        public RoleApplication Role { get; set; }
     }
 }
