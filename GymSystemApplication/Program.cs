@@ -29,11 +29,11 @@ builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IMembershipService, MembershipService>();
 
-builder.Services.AddIdentity<UserApplication,RoleApplication>()
+builder.Services.AddIdentity<UserApplication, RoleApplication>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders()
-    .AddUserStore<UserStore<UserApplication, RoleApplication, ApplicationDbContext,Guid>>()
-    .AddRoleStore<RoleStore<RoleApplication,ApplicationDbContext,Guid>>();
+    .AddDefaultTokenProviders();
+    //.AddUserStore<UserStore<UserApplication, RoleApplication, ApplicationDbContext,Guid>>()
+    //.AddRoleStore<RoleStore<RoleApplication,ApplicationDbContext,Guid>>();
 
 builder.Services.AddAuthorization(options =>
 {

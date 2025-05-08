@@ -7,6 +7,7 @@
 <table border="1" class="table">
 	<thead class="table thead">
 		<tr>
+			<th>Role</th>
 			<th>Name</th>
 			<th>Username</th>
 			<th>Contact Number</th>
@@ -22,6 +23,14 @@
 		@foreach(var member in Model)
 		{
 			<tr class="table tbody tr">
+				<td>
+					@foreach (var role in @member.User.userRoles)
+					{
+
+						<div>@role.RoleName</div>
+
+					}
+				</td>
 				<td>@member.User.DisplayName</td>
 				<td>@member.User.UserName</td>
 				<td>@member.User.PhoneNumber</td>

@@ -19,6 +19,7 @@ namespace Entities.Extensions
                 UserName = user.UserName,
                 PhoneNumber = user.PhoneNumber,
                 Address = user.Address,
+                userRoles = user.UserRoles.Select(temp => temp.ToApplicationUserRoleResponse()).ToList()
             };
         }
     }
