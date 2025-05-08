@@ -17,6 +17,7 @@
 			<th>Membership Type</th>
 			<th>Attendances</th>
 			<th>Class Bookings</th>
+			<th>Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -26,9 +27,7 @@
 				<td>
 					@foreach (var role in @member.User.userRoles)
 					{
-
 						<div>@role.RoleName</div>
-
 					}
 				</td>
 				<td>@member.User.DisplayName</td>
@@ -43,6 +42,10 @@
 				</td>
 				<td>
 					<a>View Class Bookings</a>
+				</td>
+				<td>
+					<a asp-controller="Member" asp-action="UpdateMember" asp-route-memberId="@member.User.Id">Update</a>
+					<a asp-controller="Member" asp-action="RemoveMember" asp-route-memberId="@member.User.Id">Remove</a>
 				</td>
 
 			</tr>

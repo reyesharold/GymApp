@@ -33,6 +33,12 @@ namespace Services.UserServices
             _signInManager = signInManager;
         }
 
+
+        /// <summary>
+        /// adds a user to AspNetUsers and Members table, default role is set to Member
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>Register Member Response</returns>
         public async Task<RegisterMemberResponse> RegisterMember(RegisterMemberAddRequest request)
         {
             var user = new UserApplication
@@ -70,18 +76,38 @@ namespace Services.UserServices
 
             var member = await _memberService.AddMemberAsync(request.MemberAddRequest); //add user to Members
 
-            //request.PaymentAddRequest.UserId = user.Id;
-            //request.PaymentAddRequest.PaymentDate = DateTime.Now;
-            //if (request.PaymentAddRequest.Amount != member.Membership?.Price) { throw new Exception("Please Pay exact amount"); }
-
-            //await _paymentService.CreatePaymentAsync(request.PaymentAddRequest); // add payment
-
             await _signInManager.SignInAsync(user, isPersistent: false); 
 
             return new RegisterMemberResponse
             {
                 Success = true,
                 UserId = user.Id,
+            };
+        }
+
+        /// <summary>
+        /// Update Details of a user
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>User Response</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Exception"></exception>
+        public async Task<UserResponse> UpdateUserDetails(MemberUpdateRequest request)
+        {
+            await _memberService.UpdateMemberDetailsAsync(request);
+            
+            var user = await _userManager.FindByIdAsync(request.Id.ToString());
+            if (user == null) { throw new ArgumentNullException(nameof(request.Id)); }
+
+            if (!string.IsNullOrEmpty(request.Name)) { user.DisplayName = request.Name; }
+            if (!string.IsNullOrEmpty(request.Address)) { user.Address = request.Address; }
+
+            IdentityResult result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded) { throw new Exception("Unable to update Display Name"); }
+
+            return new UserResponse
+            {
+                DisplayName = user.DisplayName,
             };
         }
     }
