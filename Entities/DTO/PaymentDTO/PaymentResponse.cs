@@ -13,7 +13,7 @@ namespace Entities.DTO.PaymentDTO
         public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
-        public Guid MemberId { get; set; }
+        public Guid? MemberId { get; set; }
         public string? MemberName { get; set; }
     }
 }

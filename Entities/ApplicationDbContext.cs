@@ -48,23 +48,26 @@ namespace Entities
             builder.Entity<Member>()
                 .HasOne(u => u.User)
                 .WithOne(m => m.Member)
-                .HasForeignKey<Member>(u => u.UserId);
+                .HasForeignKey<Member>(u => u.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Member>()
                 .HasOne(m => m.Membership)
                 .WithMany(m => m.Members)
-                .HasForeignKey(m => m.MembershipId);
+                .HasForeignKey(m => m.MembershipId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Trainer>()
                 .HasOne(u => u.User)
                 .WithOne(t => t.Trainer)
-                .HasForeignKey<Trainer>(u => u.UserId);
+                .HasForeignKey<Trainer>(u => u.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
              
             builder.Entity<Payment>()
                 .HasOne(m => m.Member)
                 .WithMany(p => p.Payments)
                 .HasForeignKey(u => u.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<WorkoutPlan>()
                 .HasOne(t => t.Trainer)
