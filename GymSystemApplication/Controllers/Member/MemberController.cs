@@ -96,5 +96,12 @@ namespace GymSystemApplication.Controllers.Member
                 return View("Error", errorModel);
             }
         }
+
+        [Route("Member/Confirm-Remove")]
+        [HttpGet]
+        public IActionResult ConfirmRemoveMember()
+        {
+            return View();
+        }
     }
 }

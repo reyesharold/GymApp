@@ -16,7 +16,7 @@ namespace Entities.Domain
         public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
-        public Guid UserId { get; set; } // foreign key for Member
+        public Guid? UserId { get; set; } // foreign key for Member
         public Member Member {  get; set; } // one to one -> Member
     }
 }
