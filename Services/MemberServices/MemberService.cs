@@ -46,11 +46,9 @@ namespace Services.MemberServices
 
         public async Task<ICollection<MemberResponse>> GetAllMembersAsync()
         {
+            var members = await _commonRepo.GetAllAsync(m =>
+            !m.User.UserRoles.Any(r => r.Role.Name == Roles.Trainer.ToString() || r.Role.Name == Roles.Admin.ToString()),
 
-            var members = await _commonRepo.GetAllAsync(m => 
-            !m.User.UserRoles.Any(r => r.Role.Name == Roles.Trainer.ToString() || 
-            !m.User.UserRoles.Any(r => r.Role.Name == Roles.Admin.ToString())), 
-            
             query => query
             .Include(u => u.User)
                 .ThenInclude(ur => ur.UserRoles)
