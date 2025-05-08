@@ -11,5 +11,6 @@ namespace Services.UserServices
     public interface IUserService
     {
         Task<RegisterMemberResponse> RegisterMember(RegisterMemberAddRequest request);
+        Task<UserResponse> UpdateUserDetails(MemberUpdateRequest request);
     }
 }

@@ -1,0 +1,24 @@
+﻿@model MemberUpdateViewModel
+
+@{
+	ViewBag.Title = "Update Details";
+}
+
+<h2>Update details of @Model.Member.User.DisplayName</h2>
+<form asp-action="UpdateMember" method="post">
+	<input type="hidden" value="@Model.Member.User.Id" asp-for="@Model.UpdateRequest.Id" />
+
+	<label>Name</label>
+	<input asp-for="@Model.UpdateRequest.Name" />
+
+	<label>Date of Birth</label>
+	<input asp-for="@Model.UpdateRequest.DateOfBirth" />
+
+	<label>Gender</label>
+	<select asp-for="@Model.UpdateRequest.Gender" asp-items="@ViewBag.Gender"></select>
+
+	<label>Address</label>
+	<input asp-for="@Model.UpdateRequest.Address" />
+
+	<button type="submit">Update</button>
+</form>

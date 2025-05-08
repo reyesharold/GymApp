@@ -12,5 +12,6 @@ namespace Services.MemberServices
         Task<MemberResponse> AddMemberAsync(MemberAddRequest request);
         Task<MemberResponse> GetMemberViaId(Guid id);
         Task<ICollection<MemberResponse>> GetAllMembersAsync();
+        Task<MemberResponse> UpdateMemberDetailsAsync(MemberUpdateRequest request);
     }
 }
