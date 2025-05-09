@@ -99,9 +99,50 @@ namespace GymSystemApplication.Controllers.Member
 
         [Route("Member/Confirm-Remove")]
         [HttpGet]
-        public IActionResult ConfirmRemoveMember()
+        public async Task<IActionResult> ConfirmRemoveMember(Guid userId)
         {
-            return View();
+            try
+            {
+                var member = await _memberService.GetMemberViaId(userId);
+
+                return View(member);
+            }
+            catch (Exception ex)
+            {
+                var errorModel = new ErrorViewModel
+                {
+                    Message = ex.InnerException?.Message ?? ex.Message
+                    
+                };
+                return View("Error", errorModel);
+            }
+        }
+
+        [Route("Member/Remove")]
+        [HttpPost]
+        public async Task<IActionResult> RemoveMember(Guid id)
+        {
+
+            try
+            {
+                var result = await _userService.DeleteUser(id);
+                if (result)
+                {
+                    return RedirectToAction(nameof(DisplayMembers));
+                }
+                else
+                {
+                    return BadRequest("Unable to Delete User");
+                }
+            }
+            catch(Exception ex)
+            {
+                var errorModel = new ErrorViewModel
+                {
+                    Message = ex.InnerException?.Message ?? ex.Message
+                };
+                return View("Error", errorModel);
+            }
         }
     }
 }
