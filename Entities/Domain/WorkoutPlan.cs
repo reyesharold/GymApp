@@ -14,7 +14,7 @@ namespace Entities.Domain
         public string Title { get; set; }
         public string Description { get; set; }
         public Guid UserId { get; set; } // foreignKey for Trainer
-        public Trainer Trainer { get; set; } // one to one -> Trainer
-        public ICollection<WorkoutExercise> WorkoutExercises { get; set; } // one to many -> WorkoutExercise
+        public Trainer? Trainer { get; set; } // one to one -> Trainer
+        public ICollection<WorkoutExercise>? WorkoutExercises { get; set; } // one to many -> WorkoutExercise
     }
 }

@@ -1,0 +1,48 @@
+﻿@model WorkoutPlanResponse
+
+@{
+	ViewBag.Title = "Workout Plan Details";
+}
+
+
+<div>
+	<h1>Workout Plan : @Model.Title</h1>
+	<h5>Workout Id : @Model.Id</h5>
+</div>
+<div>
+	<h3>Trainer Name : @Model.TrainerName</h3>
+</div>
+
+<div>
+	<span>Description : </span>
+	<p>@Model.Description</p>
+</div>
+
+<div>
+	<h3>
+		<a asp-controller="WorkoutExercise" asp-action="AddExercise" asp-route-WorkoutPlanId="@Model.Id">Add Exercise</a>
+	</h3>
+</div>
+
+@if (Model.WorkoutExercises != null)
+{
+	<table border="1" class="table">
+		<thead class="table thead">
+			<tr>
+				<th>Exercise Name</th>
+				<th>Sets</th>
+				<th>Reps</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var exercise in Model.WorkoutExercises)
+			{
+				<tr class="table tbody tr">
+					<td>@exercise.ExerciseName</td>
+					<td>@exercise.Sets</td>
+					<td>@exercise.Reps</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}

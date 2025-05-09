@@ -15,7 +15,7 @@ namespace Entities.Domain
         public UserApplication User {  get; set; } // one to one -> UserApplication
         public string Specialties { get; set; }
         public  string Certifications { get; set; }
-        public ICollection<WorkoutPlan> WorkoutPlans { get; set; } // one to many -> WorkoutPlan
-        public ICollection<Class> Classes { get; set; } // one to many -> Class
+        public ICollection<WorkoutPlan>? WorkoutPlans { get; set; } // one to many -> WorkoutPlan
+        public ICollection<Class>? Classes { get; set; } // one to many -> Class
     }
 }

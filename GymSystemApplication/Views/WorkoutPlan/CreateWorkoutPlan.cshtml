@@ -1,0 +1,18 @@
+﻿@model WorkoutPlanAddRequest
+
+@{
+	ViewBag.Title = "Create Workout Plan";
+}
+
+<form asp-controller="WorkoutPlan" asp-action="CreateWorkoutPlan" method="post">
+	<label for="Title">Title</label>
+	<input asp-for="Title" />
+
+	<label for="Description">Description</label>
+	<input asp-for="Description" />
+
+	<label for="UserId">Trainer</label>
+	<select asp-for="UserId" asp-items="@ViewBag.Trainers"></select>
+
+	<button type="submit">Save</button>
+</form>

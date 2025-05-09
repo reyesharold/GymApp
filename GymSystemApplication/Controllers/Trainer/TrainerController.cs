@@ -36,7 +36,7 @@ namespace GymSystemApplication.Controllers.Trainer
 
                 await _trainerService.CreateTrainerAsync(request);
 
-                return RedirectToAction("DisplayTrainers");
+                return RedirectToAction(nameof(DisplayTrainers));
             }
             catch (Exception ex)
             {
