@@ -10,6 +10,7 @@ using Repositories.Common;
 using Services.MemberServices;
 using Services.MembershipServices;
 using Services.PaymentServices;
+using Services.TrainerServices;
 using Services.UserServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,11 +24,13 @@ builder.Services.AddDbContext<ApplicationDbContext>( options =>
 builder.Services.AddScoped<ICommonRepo<Member>, CommonRepo<Member>>();
 builder.Services.AddScoped<ICommonRepo<Membership>, CommonRepo<Membership>>();
 builder.Services.AddScoped<ICommonRepo<Payment>, CommonRepo<Payment>>();
+builder.Services.AddScoped<ICommonRepo<Trainer>, CommonRepo<Trainer>>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IMembershipService, MembershipService>();
+builder.Services.AddScoped<ITrainerService, TrainerService>();
 
 builder.Services.AddIdentity<UserApplication, RoleApplication>()
     .AddEntityFrameworkStores<ApplicationDbContext>()

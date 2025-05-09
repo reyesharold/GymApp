@@ -1,0 +1,50 @@
+﻿@model ICollection<TrainerResponse>
+
+@{
+	ViewBag.Title = "Trainers";
+}
+
+<h2>
+	<a asp-controller="Trainer" asp-action="AddTrainer">Add Trainer</a>
+</h2>
+<br />
+<table border="1" class="table">
+	<thead class="table thead">
+		<tr>
+			<th>Role</th>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Contact Number</th>
+			<th>Address</th>
+			<th>Specialties</th>
+			<th>Certifications</th>
+			<th>WorkoutPlans</th>
+			<th>Classes</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var trainer in Model)
+		{
+			<tr>
+				<td>
+					@foreach (var role in @trainer.User.userRoles)
+					{
+						<div>@role.RoleName</div>
+					}
+				</td>
+				<td>@trainer.User.DisplayName</td>
+				<td>@trainer.User.UserName</td>
+				<td>@trainer.User.PhoneNumber</td>
+				<td>@trainer.User.Address</td>
+				<td>@trainer.Specialties</td>
+				<td>@trainer.Certifications</td>
+				<td>
+					<a>View Workout plans</a>
+				</td>
+				<td>
+					<a>View Classes</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

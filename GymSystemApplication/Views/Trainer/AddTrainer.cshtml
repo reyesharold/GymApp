@@ -1,0 +1,72 @@
+﻿@model CreateTrainerDTO
+
+@{
+	ViewBag.Title = "Create Trainer";
+}
+
+<form asp-action="AddTrainer" method="post">
+	<div>
+		<label for="RegisterDTO.Name">Name </label>
+		<input asp-for="RegisterDTO.Name" />
+		<span asp-validation-for="RegisterDTO.Name"></span>
+	</div>
+
+	<div>
+		<label for="RegisterDTO.Email">Email </label>
+		<input asp-for="RegisterDTO.Email" />
+		<span asp-validation-for="RegisterDTO.Email"></span>
+	</div>
+
+	<div>
+		<label for="RegisterDTO.PhoneNumber">Contact Number </label>
+		<input asp-for="RegisterDTO.PhoneNumber" />
+		<span asp-validation-for="RegisterDTO.PhoneNumber"></span>
+	</div>
+
+	<div>
+		<label for="RegisterDTO.Address">Address </label>
+		<input asp-for="RegisterDTO.Address" />
+		<span asp-validation-for="RegisterDTO.Address"></span>
+	</div>
+
+
+	<div>
+		<label for="TrainerAddRequest.Specialties">Specialties </label>
+		<input asp-for="TrainerAddRequest.Specialties" />
+		<span asp-validation-for="TrainerAddRequest.Specialties"></span>
+	</div>
+
+
+	<div>
+		<label for="TrainerAddRequest.Certifications">Certifications </label>
+		<input asp-for="TrainerAddRequest.Certifications" />
+		<span asp-validation-for="TrainerAddRequest.Certifications"></span>
+	</div>
+
+	<div>
+		<label for="RegisterDTO.Password">Password </label>
+		<input asp-for="RegisterDTO.Password" />
+		<span asp-validation-for="RegisterDTO.Password"></span>
+	</div>
+
+	<div>
+		<label for="RegisterDTO.ConfirmPassword">Confirm Password </label>
+		<input asp-for="RegisterDTO.ConfirmPassword" />
+		<span asp-validation-for="RegisterDTO.ConfirmPassword"></span>
+	</div>
+
+
+	<div>
+		<button type="submit">Register</button>
+	</div>
+
+</form>
+
+<div asp-validation-summary="All"></div>
+@if (ViewBag.Errors != null)
+{
+	@foreach (var error in ViewBag.Errors)
+	{
+		<span>@error</span>
+	}
+}

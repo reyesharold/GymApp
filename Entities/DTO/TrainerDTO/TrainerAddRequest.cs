@@ -10,7 +10,6 @@ namespace Entities.DTO.TrainerDTO
 {
     public class TrainerAddRequest
     {
-        [Required(ErrorMessage = "ID is required")]
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Specialties are required")]
