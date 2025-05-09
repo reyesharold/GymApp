@@ -1,0 +1,30 @@
+﻿@model ICollection<WorkoutPlanResponse>
+
+@{
+	ViewBag.Title = "Workout Plans";
+}
+<h3>
+	<a asp-controller="WorkoutPlan" asp-action="CreateWorkoutPlan">Add Workout Plan</a>
+</h3>
+<table border="1" class="table">
+	<thead class="table thead">
+		<tr>
+			<th>Title</th>
+			<th>Trainer Name</th>
+			<th>Details</th>
+
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var workout in Model)
+		{
+			<tr class="table tbody tr">
+				<td>@workout.Title</td>
+				<td>@workout.TrainerName</td>
+				<td>
+					<a asp-controller="WorkoutPlan" asp-action="WorkoutPlanDetails" asp-route-Id="@workout.Id">View</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

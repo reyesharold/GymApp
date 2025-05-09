@@ -18,8 +18,8 @@ namespace Entities.Extensions
                 Title = workoutPlan.Title,
                 Description = workoutPlan.Description,
                 TrainerId = workoutPlan.UserId,
-                TrainerName = workoutPlan.Trainer.User.DisplayName,
-                WorkoutExercises = workoutPlan.WorkoutExercises.Select(w => w.ToWorkoutExerciseResponse()).ToList(),
+                TrainerName = workoutPlan.Trainer?.User.DisplayName,
+                WorkoutExercises = workoutPlan.WorkoutExercises?.Select(w => w.ToWorkoutExerciseResponse()).ToList(),
             };
         }
     }

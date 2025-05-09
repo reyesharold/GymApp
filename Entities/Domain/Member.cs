@@ -18,8 +18,8 @@ namespace Entities.Domain
         public Gender Gender { get; set; }
         public int MembershipId { get; set; } // foreignKey
         public Membership Membership { get; set; } // one to one -> Membership
-        public ICollection<Payment> Payments { get; set; } // one to many -> Payment
-        public ICollection<Attendance> Attendances { get; set; } // one to many -> Attendance
-        public ICollection<Booking> Bookings { get; set; } // one to many -> Booking
+        public ICollection<Payment>? Payments { get; set; } // one to many -> Payment
+        public ICollection<Attendance>? Attendances { get; set; } // one to many -> Attendance
+        public ICollection<Booking>? Bookings { get; set; } // one to many -> Booking
     }
 }
