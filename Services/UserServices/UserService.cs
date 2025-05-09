@@ -110,5 +110,24 @@ namespace Services.UserServices
                 DisplayName = user.DisplayName,
             };
         }
+
+        /// <summary>
+        /// Deletes a user via Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>Boolean</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<bool> DeleteUser(Guid userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null) { throw new ArgumentNullException("Invalid User Id",nameof(userId));}
+
+            IdentityResult result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                return true;
+            }
+            else { return false; }
+        }
     }
 }

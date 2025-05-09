@@ -1,3 +1,14 @@
-﻿@{
+﻿@model MemberResponse
+
+@{
 	ViewBag.Title = "Remove Confirmation";
 }
+
+<form asp-controller="Member" asp-action="RemoveMember" method="post">
+	<input type="hidden" name="id" value="@Model.User.Id" />
+	<div>
+		<h3>Click confirm to delete <em>@Model.User.DisplayName</em> </h3>
+	</div>
+
+	<button type="submit">Cofirm</button>
+</form>

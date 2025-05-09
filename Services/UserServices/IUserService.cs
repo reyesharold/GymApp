@@ -12,5 +12,6 @@ namespace Services.UserServices
     {
         Task<RegisterMemberResponse> RegisterMember(RegisterMemberAddRequest request);
         Task<UserResponse> UpdateUserDetails(MemberUpdateRequest request);
+        Task<bool> DeleteUser(Guid userId);
     }
 }
