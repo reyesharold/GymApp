@@ -13,7 +13,7 @@ namespace Entities.DTO.WorkoutPlanDTO
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public Guid? TrainerId { get; set; }
+        public Guid TrainerId { get; set; }
         public string? TrainerName { get; set; }
         public ICollection<WorkoutExerciseResponse>? WorkoutExercises { get; set; }
     }
