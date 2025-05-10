@@ -1,0 +1,29 @@
+﻿@model WorkoutExerciseAddRequest
+
+@{
+	ViewBag.Title = "Create Exercise";
+}
+
+<form asp-controller="WorkoutExercise" asp-action="AddWorkoutExercise" method="post">
+	<input type="hidden" value="@ViewBag.WorkoutPlanId" asp-for="WorkoutPlanId" />
+
+	<label for="ExerciseName">Exercise Name</label>
+	<input asp-for="ExerciseName" />
+
+	<label for="Sets">Sets</label>
+	<input asp-for="Sets" />
+
+	<label for="Reps">Reps</label>
+	<input asp-for="Reps" />
+
+	<button type="submit">Save</button>
+
+</form>
+<div asp-validation-summary="All"></div>
+@if(ViewBag.Errors != null)
+{
+	@foreach(var error in ViewBag.Errors)
+	{
+		<span>@error</span>
+	}
+}

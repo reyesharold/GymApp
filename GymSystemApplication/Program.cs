@@ -12,6 +12,7 @@ using Services.MembershipServices;
 using Services.PaymentServices;
 using Services.TrainerServices;
 using Services.UserServices;
+using Services.WorkoutExerciseServices;
 using Services.WorkoutPlanServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,7 @@ builder.Services.AddScoped<ICommonRepo<Membership>, CommonRepo<Membership>>();
 builder.Services.AddScoped<ICommonRepo<Payment>, CommonRepo<Payment>>();
 builder.Services.AddScoped<ICommonRepo<Trainer>, CommonRepo<Trainer>>();
 builder.Services.AddScoped<ICommonRepo<WorkoutPlan>, CommonRepo<WorkoutPlan>>();
+builder.Services.AddScoped<ICommonRepo<WorkoutExercise>, CommonRepo<WorkoutExercise>>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
@@ -34,6 +36,7 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IMembershipService, MembershipService>();
 builder.Services.AddScoped<ITrainerService, TrainerService>();
 builder.Services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
+builder.Services.AddScoped<IWorkoutExerciseService, WorkoutExerciseService>();
 
 builder.Services.AddIdentity<UserApplication, RoleApplication>()
     .AddEntityFrameworkStores<ApplicationDbContext>()

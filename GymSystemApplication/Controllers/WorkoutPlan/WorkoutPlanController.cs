@@ -78,7 +78,15 @@ namespace GymSystemApplication.Controllers.WorkoutPlan
         {
             try
             {
-                var workoutPlan = await _workoutPlanService.GetWorkoutPlanViaIdAsync(response.Id);
+                var workoutPlan = new WorkoutPlanResponse();
+
+                if(response.Id == 0) 
+                { 
+                    workoutPlan = await _workoutPlanService.GetWorkoutPlanViaTrainerIdAsync(response.TrainerId);
+                    return View(workoutPlan);
+                }
+
+                workoutPlan = await _workoutPlanService.GetWorkoutPlanViaIdAsync(response.Id);
 
                 return View(workoutPlan);
             }

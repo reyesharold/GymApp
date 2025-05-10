@@ -39,7 +39,7 @@
 				<td>@trainer.Specialties</td>
 				<td>@trainer.Certifications</td>
 				<td>
-					<a>View Workout plans</a>
+					<a asp-controller="WorkoutPlan" asp-action="WorkoutPlanDetails" asp-route-TrainerId="@trainer.User.Id">View</a>
 				</td>
 				<td>
 					<a>View Classes</a>
