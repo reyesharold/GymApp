@@ -78,15 +78,7 @@ namespace GymSystemApplication.Controllers.WorkoutPlan
         {
             try
             {
-                var workoutPlan = new WorkoutPlanResponse();
-
-                if(response.Id == 0) 
-                { 
-                    workoutPlan = await _workoutPlanService.GetWorkoutPlanViaTrainerIdAsync(response.TrainerId);
-                    return View(workoutPlan);
-                }
-
-                workoutPlan = await _workoutPlanService.GetWorkoutPlanViaIdAsync(response.Id);
+                var workoutPlan = await _workoutPlanService.GetWorkoutPlanViaIdAsync(response.Id);
 
                 return View(workoutPlan);
             }
@@ -118,6 +110,15 @@ namespace GymSystemApplication.Controllers.WorkoutPlan
                 };
                 return View("Error", errorModel);
             }
+        }
+
+        [Route("WorkoutPlan/Display-by-Trainer")]
+        [HttpGet]
+        public async Task<IActionResult> DisplayWorkoutPlansOfTrainer(Guid TrainerId)
+        {
+            var workoutPlans = await _workoutPlanService.GetWorkoutPlansViaTrainerIdAsync(TrainerId);
+
+            return View(workoutPlans);
         }
     }
 }

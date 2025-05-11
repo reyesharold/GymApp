@@ -11,7 +11,7 @@ namespace Services.WorkoutPlanServices
     {
         Task<WorkoutPlanResponse> AddWorkoutPlanAsync(WorkoutPlanAddRequest request);
         Task<WorkoutPlanResponse> GetWorkoutPlanViaIdAsync(int id);
-        Task<WorkoutPlanResponse> GetWorkoutPlanViaTrainerIdAsync(Guid id);
+        Task<ICollection<WorkoutPlanResponse>> GetWorkoutPlansViaTrainerIdAsync(Guid id);
         Task<ICollection<WorkoutPlanResponse>> GetAllWorkoutPlanAsync();
     }
 }

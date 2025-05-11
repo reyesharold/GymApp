@@ -1,0 +1,39 @@
+﻿@model ICollection<WorkoutPlanResponse>
+
+@{
+	ViewBag.Title = "Workout Plans of Trainer";
+}
+
+<table border="1" class="table">
+	<thead class="table thead">
+		<tr>
+			<th>Title</th>
+			<th>Description</th>
+			<th>Exercises</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var plan in Model)
+		{
+			<tr class="table tbody tr">
+				<td>@plan.Title</td>
+				<td>@plan.Description</td>
+				@if (plan.WorkoutExercises?.Count != 0)
+				{
+					<td>
+						@foreach (var exercise in plan.WorkoutExercises)
+						{
+							<ul>
+								<li>@exercise.ExerciseName</li>
+							</ul>
+						}
+					</td>
+				}
+				else
+				{
+					<td>No Exercise</td>
+				}
+			</tr>
+		}
+	</tbody>
+</table>
