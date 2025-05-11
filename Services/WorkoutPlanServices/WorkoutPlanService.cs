@@ -71,25 +71,14 @@ namespace Services.WorkoutPlanServices
             };
         }
 
-        public async Task<WorkoutPlanResponse> GetWorkoutPlanViaTrainerIdAsync(Guid id)
+        public async Task<ICollection<WorkoutPlanResponse>> GetWorkoutPlansViaTrainerIdAsync(Guid trainerId)
         {
-            var response = await _commonRepo.GetAsync(w => w.UserId == id, query => query
+            var response = await _commonRepo.GetAllAsync(t => t.UserId == trainerId, query => query
             .Include(t => t.Trainer)
                 .ThenInclude(u => u.User)
             .Include(w => w.WorkoutExercises));
 
-            if (response == null) { throw new ArgumentException("Invalid Workout Plan Id", nameof(id)); }
-
-            return new WorkoutPlanResponse
-            {
-                Id = response.WorkoutPlanId,
-                Title = response.Title,
-                Description = response.Description,
-                TrainerId = response.Trainer.UserId,
-                TrainerName = response.Trainer?.User.DisplayName,
-                WorkoutExercises = response.WorkoutExercises?.Select(temp => temp.ToWorkoutExerciseResponse()).ToList()
-            };
-
+            return response.Select(temp => temp.ToWorkouPlanResponse()).ToList();
         }
     }
 }
