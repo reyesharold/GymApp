@@ -12,6 +12,7 @@ namespace Entities.DTO.BookingDTO
         public DateTime BookingDate { get; set; }
         public int ClassId { get; set; }
         public string ClassName { get; set; }
+        public string TrainerName { get; set; }
         public Guid MemberId { get; set; }
         public string MemberName { get; set; }
     }
