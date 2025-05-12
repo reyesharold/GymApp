@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Common;
+using Services.ClassServices;
 using Services.MemberServices;
 using Services.MembershipServices;
 using Services.PaymentServices;
@@ -29,6 +30,7 @@ builder.Services.AddScoped<ICommonRepo<Payment>, CommonRepo<Payment>>();
 builder.Services.AddScoped<ICommonRepo<Trainer>, CommonRepo<Trainer>>();
 builder.Services.AddScoped<ICommonRepo<WorkoutPlan>, CommonRepo<WorkoutPlan>>();
 builder.Services.AddScoped<ICommonRepo<WorkoutExercise>, CommonRepo<WorkoutExercise>>();
+builder.Services.AddScoped<ICommonRepo<Class>, CommonRepo<Class>>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
@@ -37,6 +39,7 @@ builder.Services.AddScoped<IMembershipService, MembershipService>();
 builder.Services.AddScoped<ITrainerService, TrainerService>();
 builder.Services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
 builder.Services.AddScoped<IWorkoutExerciseService, WorkoutExerciseService>();
+builder.Services.AddScoped<IClassService, ClassService>();
 
 builder.Services.AddIdentity<UserApplication, RoleApplication>()
     .AddEntityFrameworkStores<ApplicationDbContext>()

@@ -16,6 +16,6 @@ namespace Entities.Domain
         public Guid TrainerId { get; set; } // foreignKey for Trainer
         public Trainer Trainer { get; set; } // one to one -> Trainer
         public DateTime ScheduleDateTime { get; set; }
-        public ICollection<Booking>? Bookings { get; set; } // one to many ->  Booking
+        public ICollection<Booking> Bookings = new List<Booking>();// one to many ->  Booking
     }
 }

@@ -20,6 +20,6 @@ namespace Entities.Domain
         public Membership Membership { get; set; } // one to one -> Membership
         public ICollection<Payment>? Payments { get; set; } // one to many -> Payment
         public ICollection<Attendance>? Attendances { get; set; } // one to many -> Attendance
-        public ICollection<Booking>? Bookings { get; set; } // one to many -> Booking
+        public ICollection<Booking>? Bookings { get; set; }// one to many -> Booking
     }
 }

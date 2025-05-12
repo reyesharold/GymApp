@@ -1,0 +1,44 @@
+﻿@model ClassResponse
+
+@{
+	ViewBag.Title = "Class Details";
+}
+
+<div>
+	<h1>Class : </h1>
+	<h2>
+		<em>@Model.ClassName</em>
+	</h2>
+</div>
+<br />
+<div>
+	<h2>Capacity</h2>
+	<h3>Max : @Model.Capacity</h3>
+	<h3>Remaining : Remaining Slot</h3>
+</div>
+<br />
+<div>
+	<h3>Schedule : @Model.ScheduleDateTime</h3>
+</div>
+<div>
+	<h3>Trainer : <em>@Model.TrainerName</em></h3>
+</div>
+<br />
+<div>
+	<h3>Participants :</h3>
+	@if(Model.Bookings.Count != 0)
+	{
+		<ol>
+			@foreach (var participant in Model.Bookings)
+			{
+				<li>@participant.MemberName</li>
+			}
+		</ol>
+	}
+	else
+	{
+		<span>
+			<em>No Participants yet</em>
+		</span>
+	}
+</div>

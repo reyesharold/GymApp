@@ -14,7 +14,7 @@ namespace Entities.DTO.ClassDTO
         public string ClassName {  get; set; }
 
         [Required(ErrorMessage = "Capacity can't be blank")]
-        [Range(1,1000, ErrorMessage = "Capacity is out of range")]
+        [Range(1,int.MaxValue, ErrorMessage = "Capacity is out of range")]
         public int Capacity { get; set; }
 
         [Required(ErrorMessage = "Schedule can't be blank")]
