@@ -52,6 +52,8 @@ namespace Services.ClassServices
                 .ThenInclude(m => m.Member)
                     .ThenInclude(u => u.User));
 
+            if(@class == null){ throw new ArgumentException("Invalid Class ID", nameof(ClassId));}
+
             return @class.ToClassReponse();
         }
 
@@ -66,6 +68,19 @@ namespace Services.ClassServices
                 );
 
             return classes.Select(c => c.ToClassReponse()).ToList();
+        }
+
+        public async Task<ICollection<ClassResponse>> GetClassesOfTrainerAsync(Guid TrainerId)
+        {
+            var classes = await _commonRepo.GetAllAsync(t => t.TrainerId == TrainerId, query => query
+            .Include(t => t.Trainer)
+                .ThenInclude(u => u.User)
+            .Include(b => b.Bookings)
+                .ThenInclude(m => m.Member)
+                    .ThenInclude(u => u.User)
+                );
+
+            return classes.Select(temp =>temp.ToClassReponse()).ToList();
         }
     }
 }

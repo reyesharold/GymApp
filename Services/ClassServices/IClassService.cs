@@ -12,5 +12,6 @@ namespace Services.ClassServices
         Task<ClassResponse> AddClassAsync(ClassAddRequest request);
         Task<ClassResponse> GetClassViaIdAsync(int ClassId);
         Task<ICollection<ClassResponse>> GetAllClassesAsync();
+        Task<ICollection<ClassResponse>> GetClassesOfTrainerAsync(Guid TrainerId);
     }
 }
