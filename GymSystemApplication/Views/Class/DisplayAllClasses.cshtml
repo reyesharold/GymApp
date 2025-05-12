@@ -1,0 +1,37 @@
+﻿@model ICollection<ClassResponse>
+
+@{
+	ViewBag.Title = "Classes";
+}
+
+<h1>
+	<a asp-controller="Class" asp-action="CreateClass">Create Class</a>
+</h1>
+
+<table border="1" class="table">
+	<thead class="table thead">
+		<tr>
+			<td>Class Name</td>
+			<td>Full Capacity</td>
+			<td>Remaining Slots</td>
+			<td>Schedule</td>
+			<td>Trainer</td>
+			<td>Full Details</td>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var currentClass in Model)
+		{
+			<tr class="table tbody tr">
+				<th>@currentClass.ClassName</th>
+				<th>@currentClass.Capacity</th>
+				<th>Remaining SLot</th>
+				<th>@currentClass.ScheduleDateTime</th>
+				<th>@currentClass.TrainerName</th>
+				<th>
+					<a asp-controller="Class" asp-action="DisplayClassDetails" asp-route-ClassId="@currentClass.Id">View</a>
+				</th>
+			</tr>
+		}
+	</tbody>
+</table>

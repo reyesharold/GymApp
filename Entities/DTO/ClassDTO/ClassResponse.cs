@@ -15,6 +15,6 @@ namespace Entities.DTO.ClassDTO
         public DateTime ScheduleDateTime { get; set; }
         public Guid TrainerId { get; set; }
         public string TrainerName { get; set; }
-        public ICollection<BookingResponse> Bookings { get; set; }
+        public ICollection<BookingResponse> Bookings = new List<BookingResponse>();
     }
 } 

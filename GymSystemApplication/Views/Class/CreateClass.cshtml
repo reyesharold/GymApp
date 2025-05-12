@@ -1,0 +1,30 @@
+﻿@model ClassAddRequest
+
+@{
+	ViewBag.Title = "Create Class";
+}
+
+<form asp-action="CreateClass" method="post">
+	<label for="ClassName">Class Name</label>
+	<input asp-for="ClassName" />
+
+	<label for="Capacity">Capacity</label>
+	<input asp-for="Capacity" />
+
+	<label for="ScheduleDateTime">Date & Time</label>
+	<input asp-for="ScheduleDateTime" />
+
+	<label for="">Trainer</label>
+	<select asp-for="TrainerId" asp-items="@ViewBag.Trainers"></select>
+
+	<button type="submit">Save</button>
+</form>
+
+<div asp-validation-summary="All"></div>
+@if(ViewBag.Errors != null)
+{
+	@foreach(var error in ViewBag.Errors)
+	{
+		<span>@error</span>
+	}
+}
