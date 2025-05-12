@@ -109,5 +109,14 @@ namespace GymSystemApplication.Controllers.Class
                 return View("Error", errorModel);
             }
         }
+
+        [Route("Class/Trainer-Classes")]
+        [HttpGet]
+        public async Task<IActionResult> DisplayClassesOfTrainer(Guid TrainerId)
+        {
+            var classes = await _classService.GetClassesOfTrainerAsync(TrainerId);
+
+            return View(classes);
+        }
     }
 }

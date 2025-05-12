@@ -1,12 +1,8 @@
 ﻿@model ICollection<ClassResponse>
 
 @{
-	ViewBag.Title = "Classes";
+	ViewBag.Title = "Trainer's Classes";
 }
-
-<h1>
-	<a asp-controller="Class" asp-action="CreateClass">Create Class</a>
-</h1>
 
 <table border="1" class="table">
 	<thead class="table thead">
@@ -15,7 +11,6 @@
 			<td>Full Capacity</td>
 			<td>Remaining Slots</td>
 			<td>Schedule</td>
-			<td>Trainer</td>
 			<td>Full Details</td>
 		</tr>
 	</thead>
@@ -27,7 +22,6 @@
 				<th>@currentClass.Capacity</th>
 				<th>Remaining SLot</th>
 				<th>@currentClass.ScheduleDateTime</th>
-				<th>@currentClass.TrainerName</th>
 				<th>
 					<a asp-controller="Class" asp-action="DisplayClassDetails" asp-route-Id="@currentClass.Id">View</a>
 				</th>
