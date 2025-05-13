@@ -13,6 +13,7 @@ namespace Entities.DTO.BookingDTO
         public int ClassId { get; set; }
         public string ClassName { get; set; }
         public string TrainerName { get; set; }
+        public int NewClassCapacity { get; set; }
         public Guid MemberId { get; set; }
         public string MemberName { get; set; }
     }

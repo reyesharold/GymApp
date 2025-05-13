@@ -82,5 +82,21 @@ namespace Services.ClassServices
 
             return classes.Select(temp =>temp.ToClassReponse()).ToList();
         }
+
+        public async Task<ClassResponse> DecreaseClassCapacityViaBookingAsync(int ClassId)
+        {
+            var @class = await _commonRepo.GetAsync(c => c.ClassId == ClassId, null!);
+
+            if(@class.Capacity == 0) { throw new ArgumentException("Class is fully booked!", nameof(ClassId)); }
+
+            @class.Capacity -= 1;
+
+            await _commonRepo.UpdateAsync(@class, c => c.Capacity);
+
+            return new ClassResponse
+            {
+                Capacity = @class.Capacity,
+            };
+        }
     }
 }
