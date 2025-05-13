@@ -29,7 +29,8 @@ namespace Services.BookingServices
             var @class = await _classService.GetClassViaIdAsync(request.ClassId);
             if (@class == null) { throw new ArgumentException("Invalid Class ID", nameof(request.ClassId)); }
             if (@class.Capacity == 0) { throw new ArgumentException("Class is fully booked!", nameof(@class.Capacity)); }
-
+            if (@class.Bookings.Any(u => u.MemberId == request.MemberId)) { throw new ArgumentException("User is already in the class", nameof(request.MemberId)); }
+            
             var booking = await _commonRepo.AddAync(request.ToBooking());
             await _classService.DecreaseClassCapacityViaBookingAsync(booking.ClassId);
 
