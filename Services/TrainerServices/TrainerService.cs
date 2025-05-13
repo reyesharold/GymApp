@@ -79,6 +79,7 @@ namespace Services.TrainerServices
             .Include(c => c.Classes)
                 .ThenInclude(b => b.Bookings)
                     .ThenInclude(m => m.Member)
+                        .ThenInclude(u => u.User)
             );
 
             return trainers.Select(t => t.ToTrainerResponse()).ToList();
