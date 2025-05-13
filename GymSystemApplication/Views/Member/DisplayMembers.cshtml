@@ -41,7 +41,7 @@
 					<a>View Attendances</a>
 				</td>
 				<td>
-					<a>View Class Bookings</a>
+					<a asp-controller="Booking" asp-action="DisplayBookingsOfMember" asp-route-MemberId="@member.User.Id">View</a>
 				</td>
 				<td>
 					<a asp-controller="Member" asp-action="UpdateMember" asp-route-memberId="@member.User.Id">Update</a>

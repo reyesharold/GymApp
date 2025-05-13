@@ -30,7 +30,7 @@ namespace GymSystemApplication.Controllers.Booking
         {
             try
             {
-                var response = await _bookingServices.AddBooking(request);
+                var response = await _bookingServices.AddBookingAsync(request);
 
                 var classResponse = new ClassResponse
                 {
@@ -48,5 +48,24 @@ namespace GymSystemApplication.Controllers.Booking
             }
         }
 
+        [Route("Booking/Member-Booking")]
+        [HttpGet]
+        public async Task<IActionResult> DisplayBookingsOfMember(Guid MemberId)
+        {
+            try
+            {
+                var bookings = await _bookingServices.GetBookingsOfMemberAsync(MemberId);
+
+                return View(bookings);
+            }
+            catch (Exception ex)
+            {
+                var errorModel = new ErrorViewModel
+                {
+                    Message = ex.InnerException?.Message ?? ex.Message
+                };
+                return View("Error", errorModel);
+            }
+        }
     }
 }
