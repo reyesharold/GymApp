@@ -1,0 +1,15 @@
+﻿@model BookingAddRequest
+
+@{
+	ViewBag.Title = "Booking Confirmation";
+	var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+<h1>Confirm booking of Class @ViewBag.ClassId</h1>
+
+<form asp-action="BookClass" method="post">
+	<input type="hidden" value="@userId" asp-for="MemberId"/>
+	<input type="hidden" value="@ViewBag.ClassId" asp-for="ClassId"/>
+	<input type="hidden" value="@DateTime.UtcNow" asp-for="BookingDate"/>
+	<button type="submit">Save</button>
+</form>

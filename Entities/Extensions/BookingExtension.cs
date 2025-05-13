@@ -18,6 +18,7 @@ namespace Entities.Extensions
                 BookingDate = booking.BookingDate,
                 ClassId = booking.ClassId,
                 ClassName = booking.Class.ClassName,
+                NewClassCapacity = booking.Class.Capacity,
                 TrainerName = booking.Class.Trainer.User.DisplayName,
                 MemberId = booking.UserId,
                 MemberName = booking.Member.User.DisplayName,

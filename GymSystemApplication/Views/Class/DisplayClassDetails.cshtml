@@ -25,6 +25,10 @@
 </div>
 <br />
 <div>
+	<a asp-controller="Booking" asp-action="ConfirmBooking" asp-route-ClassId="@Model.Id">Book Class</a>
+</div>
+<br />
+<div>
 	<h3>Participants :</h3>
 	@if(Model.Bookings.Count != 0)
 	{

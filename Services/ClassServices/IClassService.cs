@@ -13,5 +13,6 @@ namespace Services.ClassServices
         Task<ClassResponse> GetClassViaIdAsync(int ClassId);
         Task<ICollection<ClassResponse>> GetAllClassesAsync();
         Task<ICollection<ClassResponse>> GetClassesOfTrainerAsync(Guid TrainerId);
+        Task<ClassResponse> DecreaseClassCapacityViaBookingAsync(int ClassId);
     }
 }
