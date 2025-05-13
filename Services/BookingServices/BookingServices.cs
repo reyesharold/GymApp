@@ -24,7 +24,7 @@ namespace Services.BookingServices
 
         }
 
-        public async Task<BookingResponse> AddBooking(BookingAddRequest request)
+        public async Task<BookingResponse> AddBookingAsync(BookingAddRequest request)
         {
             var @class = await _classService.GetClassViaIdAsync(request.ClassId);
             if (@class == null) { throw new ArgumentException("Invalid Class ID", nameof(request.ClassId)); }
@@ -43,6 +43,18 @@ namespace Services.BookingServices
             );
 
             return response.ToBookingReponse();
+        }
+
+        public async Task<ICollection<BookingResponse>> GetBookingsOfMemberAsync(Guid MemberId)
+        {
+            var bookings = await _commonRepo.GetAllAsync(m => m.UserId == MemberId, query => query
+            .Include(c => c.Class)
+                .ThenInclude(t => t.Trainer)
+                    .ThenInclude(u => u.User)
+            .Include(m => m.Member)
+                .ThenInclude(u => u.User));
+
+            return bookings.Select(temp => temp.ToBookingReponse()).ToList();
         }
     }
 }

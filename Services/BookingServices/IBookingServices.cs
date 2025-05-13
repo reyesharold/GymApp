@@ -9,6 +9,7 @@ namespace Services.BookingServices
 {
     public interface IBookingServices
     {
-        Task<BookingResponse> AddBooking(BookingAddRequest request);
+        Task<BookingResponse> AddBookingAsync(BookingAddRequest request);
+        Task<ICollection<BookingResponse>> GetBookingsOfMemberAsync(Guid MemberId);
     }
 }

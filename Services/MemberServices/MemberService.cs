@@ -75,6 +75,9 @@ namespace Services.MemberServices
             .Include(p => p.Payments)
             .Include(a => a.Attendances)
             .Include(b => b.Bookings)
+                .ThenInclude(c => c.Class)
+                    .ThenInclude(t => t.Trainer)
+                        .ThenInclude(u => u.User)
             .Include(m => m.Membership)
             );
 

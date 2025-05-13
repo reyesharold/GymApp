@@ -1,0 +1,25 @@
+﻿@model ICollection<BookingResponse>
+
+@{
+	ViewBag.Title = "Member Bookings";
+}
+
+<table border="1" class="table">
+	<thead class="table thead">
+		<tr>
+			<th>Class</th>
+			<th>Trainer</th>
+			<th>Schedule</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var booking in Model)
+		{
+			<tr class="table tbody tr">
+				<td>@booking.ClassName</td>
+				<td>@booking.TrainerName</td>
+				<td>@booking.Schedule</td>
+			</tr>
+		}
+	</tbody>
+</table>

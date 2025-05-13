@@ -20,8 +20,8 @@ namespace Entities.DTO.MemberDTO
         public int MembershipId { get; set; }
         public string MembershipName { get; set; }
         public decimal MembershipPrice { get; set; }
-        public ICollection<PaymentResponse>? Payments { get; set; }
-        public ICollection<AttendanceResponse>? Attendances { get; set; }
-        public ICollection<BookingResponse>? Bookings { get; set; }
+        public ICollection<PaymentResponse> Payments { get; set; }
+        public ICollection<AttendanceResponse> Attendances { get; set; }
+        public ICollection<BookingResponse> Bookings { get; set; }
     }
 }
