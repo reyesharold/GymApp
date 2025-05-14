@@ -184,12 +184,12 @@ namespace Entities
 
             builder.Entity<Attendance>()
                 .Property(c => c.CheckInTime)
-                .HasColumnType("date")
+                .HasColumnType("datetime2")
                 .IsRequired();
 
             builder.Entity<Attendance>()
                 .Property(c => c.CheckOutTime)
-                .HasColumnType("date")
+                .HasColumnType("datetime2")
                 .IsRequired();
 
             builder.Entity<Class>()

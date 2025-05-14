@@ -1,0 +1,10 @@
+﻿@{
+	ViewBag.Title = "Confirm Check Out";
+}
+
+<h2>Check Out : @DateTime.Now</h2>
+
+<form asp-action="CheckOut">
+	<input type="hidden" value="@ViewBag.AttendanceId" name="attendanceId" />
+	<button type="submit">Check Out</button>
+</form>
