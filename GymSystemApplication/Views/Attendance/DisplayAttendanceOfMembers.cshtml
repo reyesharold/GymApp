@@ -1,0 +1,35 @@
+﻿@model ICollection<AttendanceResponse>
+
+@{
+	ViewBag.Title = "Attendance Records";
+}
+
+<table border="1" class="table">
+	<thead class="table thead">
+		<tr>
+			<th>Attendance ID</th>
+			<th>Check In</th>
+			<th>Check Out</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var record in Model)
+		{
+			<tr>
+				<td>@record.AttendanceId</td>
+				<td>@record.CheckInTime</td>
+
+				@if (@record.CheckOutTime == DateTime.MinValue)
+				{
+					<td>
+						<a asp-controller="Attendance" asp-action="ConfirmCheckOut" asp-route-attendanceId="@record.AttendanceId">Check Out</a>
+					</td>
+				}
+				else
+				{
+					<td>@record.CheckOutTime</td>
+				}
+			</tr>
+		}
+	</tbody>
+</table>

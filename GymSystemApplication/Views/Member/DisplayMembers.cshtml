@@ -38,7 +38,7 @@
 				<td>@member.Gender</td>
 				<td>@member.MembershipName</td>
 				<td>
-					<a>View Attendances</a>
+					<a asp-controller="Attendance" asp-action="DisplayAttendanceOfMembers" asp-route-memberId="@member.User.Id">View</a>
 				</td>
 				<td>
 					<a asp-controller="Booking" asp-action="DisplayBookingsOfMember" asp-route-MemberId="@member.User.Id">View</a>
