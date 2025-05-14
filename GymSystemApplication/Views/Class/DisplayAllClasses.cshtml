@@ -25,7 +25,18 @@
 			<tr class="table tbody tr">
 				<th>@currentClass.ClassName</th>
 				<th>@currentClass.Capacity</th>
-				<th>Remaining SLot</th>
+
+				@{
+					var slots = (currentClass.Capacity - currentClass.Bookings.Count);
+				}
+				@if (slots <= 0)
+				{
+					<th><em>None</em></th>
+				}
+				else
+				{
+					<th>@slots</th>
+				}
 				<th>@currentClass.ScheduleDateTime</th>
 				<th>@currentClass.TrainerName</th>
 				<th>

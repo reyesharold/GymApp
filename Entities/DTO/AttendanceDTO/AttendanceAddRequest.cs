@@ -14,7 +14,6 @@ namespace Entities.DTO.AttendanceDTO
         [DataType(DataType.DateTime)]
         public DateTime CheckInTime { get; set; }
 
-        [Required(ErrorMessage = "Check-out time can't be blank")]
         [DataType(DataType.DateTime)]
         public DateTime CheckOutTime { get; set; }
 

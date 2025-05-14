@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Common;
+using Services.AttendanceServices;
 using Services.BookingServices;
 using Services.ClassServices;
 using Services.MemberServices;
@@ -33,6 +34,7 @@ builder.Services.AddScoped<ICommonRepo<WorkoutPlan>, CommonRepo<WorkoutPlan>>();
 builder.Services.AddScoped<ICommonRepo<WorkoutExercise>, CommonRepo<WorkoutExercise>>();
 builder.Services.AddScoped<ICommonRepo<Class>, CommonRepo<Class>>();
 builder.Services.AddScoped<ICommonRepo<Booking>, CommonRepo<Booking>>();
+builder.Services.AddScoped<ICommonRepo<Attendance>, CommonRepo<Attendance>>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
@@ -43,6 +45,7 @@ builder.Services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
 builder.Services.AddScoped<IWorkoutExerciseService, WorkoutExerciseService>();
 builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<IBookingServices, BookingServices>();
+builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 
 builder.Services.AddIdentity<UserApplication, RoleApplication>()
     .AddEntityFrameworkStores<ApplicationDbContext>()

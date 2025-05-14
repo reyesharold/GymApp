@@ -1,0 +1,21 @@
+﻿@model AttendanceResponse
+
+@{
+	ViewBag.Title = "Attendance Details";
+}
+
+<h2>Attendance ID : @Model.AttendanceId</h2>
+
+<h3>Member : @Model.MemberName</h3>
+
+<h3>Check In : @Model.CheckInTime</h3>
+<h3>Check Out : 
+	@if (@Model.CheckOutTime == null)
+	{
+		<a asp-controller="Attendance" asp-action="ConfirmCheckOut" asp-route-attendanceId="@Model.AttendanceId">Check Out</a>
+	}
+	else
+	{
+		@Model.CheckOutTime
+	}
+</h3>

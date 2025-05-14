@@ -10,7 +10,7 @@ namespace Entities.DTO.AttendanceDTO
     {
         public int AttendanceId { get; set; }
         public DateTime CheckInTime { get; set; }
-        public DateTime CheckOutTime { get; set; }
+        public DateTime? CheckOutTime { get; set; }
         public Guid? MemberId { get; set; }
         public string? MemberName { get; set; }
     }
