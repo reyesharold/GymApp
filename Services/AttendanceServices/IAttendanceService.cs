@@ -12,5 +12,6 @@ namespace Services.AttendanceServices
         Task<AttendanceResponse> CreateAttendanceAsync(AttendanceAddRequest request);
         Task<AttendanceResponse> GetAttendanceAsync(int attendanceId);
         Task<AttendanceResponse> CheckOutAsync(int attendanceId);
+        Task<ICollection<AttendanceResponse>> GetAttendanceOfMemberAsync(Guid memberId);
     }
 }

@@ -30,6 +30,7 @@ namespace Services.AttendanceServices
                 .Include(m => m.Member)
                     .ThenInclude(u => u.User)
                 );
+            if (attendance == null) { throw new ArgumentException("Invalid Attendance ID", nameof(attendance)); }
 
             return new AttendanceResponse
             {
@@ -47,6 +48,8 @@ namespace Services.AttendanceServices
                     .ThenInclude(u => u.User)
                 );
 
+            if (response == null) { throw new ArgumentException("Invalid Attendance ID", nameof(attendanceId)); }
+
             return response.ToAttendaceResponse();
         }
 
@@ -56,6 +59,8 @@ namespace Services.AttendanceServices
                 .Include(m => m.Member)
                     .ThenInclude(u => u.User)
                 );
+            if(attendance == null) { throw new ArgumentException("Invalid Attendance ID", nameof(attendanceId)); }
+
             attendance.CheckOutTime = DateTime.Now;
 
             await _commonRepo.UpdateAsync(attendance, 
@@ -63,6 +68,16 @@ namespace Services.AttendanceServices
                 );
 
             return attendance.ToAttendaceResponse();
+        }
+
+        public async Task<ICollection<AttendanceResponse>> GetAttendanceOfMemberAsync(Guid memberId)
+        {
+            var attendances = await _commonRepo.GetAllAsync(m => m.UserId == memberId, query => query
+            .Include(m => m.Member)
+                    .ThenInclude(u => u.User)
+                );
+
+            return attendances.Select(a => a.ToAttendaceResponse()).ToList();
         }
     }
 }

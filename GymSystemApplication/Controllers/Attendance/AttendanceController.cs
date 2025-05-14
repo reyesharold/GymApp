@@ -98,5 +98,25 @@ namespace GymSystemApplication.Controllers.Attendance
                 return View("Error", errorModel);
             }
         }
+
+        [Route("Attendance/Member-check-ins")]
+        [HttpGet]
+        public async Task<IActionResult> DisplayAttendanceOfMembers(Guid memberId)
+        {
+            try
+            {
+                var records = await _attendanceService.GetAttendanceOfMemberAsync(memberId);
+
+                return View(records);
+            }
+            catch (Exception ex)
+            {
+                var errorModel = new ErrorViewModel
+                {
+                    Message = ex.InnerException?.Message ?? ex.Message,
+                };
+                return View("Error", errorModel);
+            }
+        }
     }
 }
